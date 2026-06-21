@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cream">
+<head>
+<script>
+(function () {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+  var theme = localStorage.getItem('portfolio-theme');
+  if (theme && ['dark', 'cream', 'gold'].indexOf(theme) !== -1) {
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+  var lang = localStorage.getItem('portfolio-lang');
+  if (lang === 'zh') document.documentElement.lang = 'zh-CN';
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erika Joyce Bonje — Biography</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="apple-touch-icon" href="assets/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,wght@0,400;0,500;1,400&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --color-dark: #1E1F23;
+    --color-cream: #F7F5F2;
+    --color-gold: #B89047;
+    --color-gold-light: #E8D5A6;
+    --dark: #1E1F23;
+    --cream: #F7F5F2;
+    --gold: #B89047;
+    --gold-light: #E8D5A6;
+    --accent: #B89047;
+    --accent-soft: rgba(184, 144, 71, 0.12);
+    --serif: 'Cormorant Garamond', 'Times New Roman', Times, serif;
+    --sans: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --bg: var(--color-cream);
+    --bg-alt: #ffffff;
+    --bg-elevated: rgba(255, 255, 255, 0.72);
+    --ink: var(--color-dark);
+    --ink-soft: #555555;
+    --ink-muted: #999999;
+    --border: rgba(30, 31, 35, 0.12);
+    --surface: var(--bg);
+    --white: var(--bg-alt);
+  }
+
+  [data-theme="dark"] {
+    --bg: var(--color-dark);
+    --bg-alt: #2a2b30;
+    --bg-elevated: rgba(42, 43, 48, 0.9);
+    --ink: var(--color-cream);
+    --ink-soft: rgba(247, 245, 242, 0.75);
+    --ink-muted: rgba(247, 245, 242, 0.45);
+    --border: rgba(232, 213, 166, 0.18);
+    --accent-soft: rgba(184, 144, 71, 0.15);
+  }
+
+  [data-theme="gold"] {
+    --bg: var(--color-gold);
+    --bg-alt: #c9a55a;
+    --bg-elevated: rgba(255, 255, 255, 0.1);
+    --ink: #ffffff;
+    --ink-soft: rgba(255, 255, 255, 0.85);
+    --ink-muted: rgba(255, 255, 255, 0.65);
+    --border: rgba(255, 255, 255, 0.25);
+    --accent-soft: rgba(255, 255, 255, 0.12);
+  }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+  @font-face {
+    font-family: 'Bastliga One';
+    src: url('assets/fonts/Bastliga-One.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 2.28;
+    font-size: 14px;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+
+  html[lang="zh-CN"] body {
+    font-family: 'Noto Sans SC', var(--sans), sans-serif;
+  }
+
+  html[lang="zh-CN"] .section-heading {
+    font-family: 'Noto Sans SC', var(--serif), serif;
+  }
+
+  a { color: inherit; }
+
+  .icon {
+    width: 20px; height: 20px;
+    stroke: var(--ink);
+    fill: none;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+
+  .site-header {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s, background 0.35s ease, border-color 0.35s ease;
+  }
+
+  .site-header.scrolled { box-shadow: 0 1px 0 var(--border); }
+
+  .header-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 clamp(24px, 5%, 56px);
+  }
+
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 0;
+  }
+
+  .site-name {
+    font-family: 'Bastliga One', cursive;
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: none;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+
+  .site-name:hover { color: var(--gold); }
+
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  .header-subscribe {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .header-subscribe:hover { color: var(--gold); border-color: var(--gold); }
+
+  .theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 0;
+  }
+
+  .theme-btn {
+    width: 18px;
+    height: 18px;
+    border-radius: 0;
+    border: 2px solid transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
+  }
+
+  .theme-btn:hover { transform: scale(1.12); }
+  .theme-btn.active { border-color: var(--ink); box-shadow: 0 0 0 1px var(--bg); }
+  .theme-btn[data-theme="dark"] { background: #1E1F23; }
+  .theme-btn[data-theme="cream"] { background: #F7F5F2; border-color: rgba(30,31,35,0.15); }
+  .theme-btn[data-theme="gold"] { background: #B89047; }
+
+  .lang-toggle {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    border-radius: 0;
+    padding: 6px 12px;
+    cursor: pointer;
+    line-height: 1;
+  }
+
+  .lang-toggle:hover { color: var(--gold); border-color: var(--gold); }
+
+  .nav-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0 18px;
+    border-top: 1px solid var(--border);
+    margin-top: 16px;
+  }
+
+  .nav-menu {
+    display: flex;
+    gap: clamp(20px, 3vw, 40px);
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-menu a {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--ink);
+    transition: width 0.25s;
+  }
+
+  .nav-menu a:hover,
+  .nav-menu a.active { color: var(--ink); }
+
+  .nav-menu a:hover::after,
+  .nav-menu a.active::after { width: 100%; }
+
+  .nav-socials {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+
+  .nav-socials a {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-socials a:hover { color: var(--ink); }
+
+  .nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    color: var(--ink);
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+  }
+
+  .nav-toggle-icon {
+    position: relative;
+    display: inline-block;
+    width: 22px;
+    height: 16px;
+  }
+
+  .nav-toggle-line {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    background: currentColor;
+    border-radius: 1px;
+    transform-origin: center center;
+    transition: transform 0.3s ease, opacity 0.2s ease, top 0.3s ease;
+  }
+
+  .nav-toggle-line:nth-child(1) { top: 0; }
+  .nav-toggle-line:nth-child(2) { top: 7px; }
+  .nav-toggle-line:nth-child(3) { top: 14px; }
+
+  .nav-toggle.open .nav-toggle-line:nth-child(1) { top: 7px; transform: rotate(45deg); }
+  .nav-toggle.open .nav-toggle-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-toggle.open .nav-toggle-line:nth-child(3) { top: 7px; transform: rotate(-45deg); }
+
+  .nav-menu-mobile { display: none; }
+
+  .nav-menu-socials { display: none; list-style: none; }
+
+  body.nav-open { overflow: hidden; }
+
+  .bio-page {
+    padding: 140px clamp(24px, 5%, 56px) 100px;
+    background: var(--bg);
+    min-height: 100vh;
+  }
+
+  .section-inner {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .bio-back {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-decoration: none;
+    margin-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 3px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .bio-back:hover { color: var(--gold); border-color: var(--gold); }
+
+  .bio-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: clamp(56px, 8vw, 80px);
+  }
+
+  .bio-hero-photo {
+    width: min(220px, 55vw);
+    margin-bottom: 28px;
+  }
+
+  .bio-hero-photo img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+
+  .bio-hero-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 12px;
+  }
+
+  .bio-hero-name {
+    font-family: var(--serif);
+    font-size: clamp(36px, 6vw, 52px);
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--ink);
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+
+  html[lang="zh-CN"] .bio-hero-name {
+    font-family: 'Noto Sans SC', var(--serif), serif;
+    text-transform: none;
+  }
+
+  .bio-hero-role {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+  }
+
+  .bio-hero-text {
+    max-width: 620px;
+  }
+
+  .bio-hero-text p {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 2.28;
+    margin-bottom: 20px;
+  }
+
+  .bio-hero-text p:last-child { margin-bottom: 0; }
+
+  .bio-block {
+    padding-top: 48px;
+    border-top: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+
+  .bio-block:last-child { margin-bottom: 0; }
+
+  .bio-block-title {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 28px;
+    text-align: center;
+  }
+
+  .service-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid var(--border);
+    text-align: left;
+  }
+
+  .service-group {
+    padding: 28px 32px;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .service-group:last-child { border-bottom: none; }
+
+  .service-group:hover { background: var(--bg-elevated); }
+
+  .service-main {
+    font-family: var(--sans);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+
+  .service-subs {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 4px;
+  }
+
+  .service-subs li {
+    font-size: 13px;
+    color: var(--ink-muted);
+    line-height: 1.7;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .service-subs li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: var(--gold);
+    font-weight: 500;
+  }
+
+  .site-footer {
+    background: var(--bg);
+    transition: background 0.35s ease;
+  }
+
+  .site-footer-inner {
+    width: 100%;
+  }
+
+  .site-footer-content {
+    padding: 20px clamp(24px, 5%, 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+
+  [data-theme="cream"] .site-footer-content {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  [data-theme="gold"] .site-footer-content {
+    background: #ffffff;
+    color: var(--color-dark);
+  }
+
+  [data-theme="dark"] .site-footer-content {
+    background: var(--color-gold);
+    color: #ffffff;
+  }
+
+  .site-footer-logo {
+    max-width: 344px;
+    width: 100%;
+  }
+
+  .site-footer-wordmark {
+    display: block;
+    font-family: 'Bastliga One', cursive;
+    font-size: clamp(3.5rem, 14vw, 6rem);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: inherit;
+    text-decoration: none;
+    line-height: 0.95;
+    transition: opacity 0.2s, color 0.35s ease;
+  }
+
+  .site-footer-wordmark:hover { opacity: 0.82; }
+
+  .site-footer-name {
+    font-family: var(--sans);
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5em;
+    line-height: 1;
+    margin-top: 20px;
+    color: inherit;
+    transition: color 0.35s ease;
+  }
+
+  [data-theme="cream"] .site-footer-wordmark,
+  [data-theme="cream"] .site-footer-name,
+  [data-theme="dark"] .site-footer-wordmark,
+  [data-theme="dark"] .site-footer-name {
+    color: #ffffff;
+  }
+
+  .site-footer-copy {
+    font-family: var(--sans);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 20px;
+    transition: color 0.35s ease;
+  }
+
+  [data-theme="cream"] .site-footer-copy {
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  [data-theme="gold"] .site-footer-copy {
+    color: rgba(30, 31, 35, 0.72);
+  }
+
+  [data-theme="dark"] .site-footer-copy {
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .site-footer-copy small {
+    font-size: inherit;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 1024px) {
+    .site-footer-content { padding: 50px 20px 16px; }
+    .site-footer-logo { max-width: 268px; }
+    .site-footer-name { margin-top: 22px; }
+    .site-footer-copy { margin-top: 58px; }
+  }
+
+  .scroll-top {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 90;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--ink);
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px);
+    transition: opacity 0.3s, visibility 0.3s, transform 0.3s, background 0.2s, border-color 0.2s, color 0.2s;
+    box-shadow: 0 4px 20px rgba(30, 31, 35, 0.08);
+  }
+
+  .scroll-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .scroll-top:hover {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+
+  .scroll-top svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  @media (max-width: 768px) {
+    .service-group { padding: 24px 20px; }
+    .nav-socials, .header-subscribe { display: none; }
+    .nav-toggle { display: flex; }
+
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--bg);
+      border-bottom: 1px solid transparent;
+      padding: 0 clamp(24px, 5%, 56px);
+      gap: 16px;
+      align-items: flex-start;
+      overflow: hidden;
+      height: 0;
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .nav-menu.is-open,
+    .nav-menu.open:not(.gsap-nav) {
+      visibility: visible;
+      pointer-events: auto;
+      padding-top: 16px;
+      padding-bottom: 24px;
+      border-bottom-color: var(--border);
+      height: auto;
+      opacity: 1;
+    }
+
+    .nav-menu li { width: 100%; }
+    .nav-menu-mobile { display: list-item; }
+
+    .nav-menu-socials {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      margin-top: 8px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-mobile-social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .nav-mobile-social-link:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .nav-mobile-social-link .icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    .nav-bar { position: relative; flex-wrap: wrap; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <a href="index.html" class="site-name">Erika</a>
+      <div class="header-actions">
+        <button type="button" class="lang-toggle" id="lang-toggle" aria-label="Switch to Chinese">中文</button>
+        <div class="theme-toggle" role="group" aria-label="Color theme">
+          <button type="button" class="theme-btn" data-theme="dark" aria-label="Dark theme" title="Dark #1E1F23"></button>
+          <button type="button" class="theme-btn active" data-theme="cream" aria-label="Cream theme" title="Cream #F7F5F2"></button>
+          <button type="button" class="theme-btn" data-theme="gold" aria-label="Gold theme" title="Gold #B89047"></button>
+        </div>
+        <a href="index.html#contact" class="header-subscribe" data-i18n="nav.contact">Contact</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+          <span class="nav-toggle-icon" aria-hidden="true">
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+    <nav class="nav-bar">
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="biography.html" class="active" data-i18n="nav.biography">Biography</a></li>
+        <li><a href="index.html#skills" data-i18n="nav.skills">Skills</a></li>
+        <li><a href="portfolio.html" data-i18n="nav.portfolio">Portfolio</a></li>
+        <li><a href="index.html#certificates" data-i18n="nav.certificates">Certificates</a></li>
+        <li class="nav-menu-mobile"><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
+        <li class="nav-menu-socials">
+          <a href="https://linkedin.com/in/erikabonje" class="nav-mobile-social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><path d="M2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="mailto:erika.bonje@email.com" class="nav-mobile-social-link" aria-label="Email">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          </a>
+        </li>
+      </ul>
+      <div class="nav-socials">
+        <a href="https://linkedin.com/in/erikabonje" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:erika.bonje@email.com">Email</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="bio-page" id="about">
+  <div class="section-inner">
+    <a href="index.html" class="bio-back" data-i18n="bio.back">← Home</a>
+
+    <header class="bio-hero">
+      <div class="bio-hero-photo">
+        <img src="assets/profile-about.png" alt="Erika Joyce Bonje">
+      </div>
+      <p class="bio-hero-label" data-i18n="section.biography">Biography</p>
+      <h1 class="bio-hero-name">Erika Joyce Bonje</h1>
+      <p class="bio-hero-role" data-i18n="bio.role">Virtual Assistant · Bookkeeper</p>
+      <div class="bio-hero-text">
+        <p data-i18n="about.p1">
+          I'm Erika Joyce Bonje, a dedicated Virtual Assistant with over five years of experience supporting business owners remotely. I specialize in administrative support, content coordination, email management, and keeping your operations running smoothly — so you can focus on what matters most.
+        </p>
+        <p data-i18n="about.p2">
+          Whether you need help managing your inbox, creating social content, organizing files, or preparing reports, I bring structure, reliability, and clear communication to every task.
+        </p>
+      </div>
+    </header>
+
+    <section class="bio-block bio-services">
+      <h2 class="bio-block-title" data-i18n="about.services">Services</h2>
+      <div class="service-groups">
+        <div class="service-group">
+          <h3 class="service-main" data-i18n="services.main1">Administrative Tasks</h3>
+          <ul class="service-subs">
+            <li data-i18n="services.main1.sub1">Scheduling</li>
+            <li data-i18n="services.main1.sub2">Email Management</li>
+            <li data-i18n="services.main1.sub3">Document Organization</li>
+            <li data-i18n="services.main1.sub4">Data Management</li>
+          </ul>
+        </div>
+        <div class="service-group">
+          <h3 class="service-main" data-i18n="services.main3">Business Support</h3>
+          <ul class="service-subs">
+            <li data-i18n="services.main3.sub1">Customer Support</li>
+            <li data-i18n="services.main3.sub2">Research &amp; Reporting</li>
+            <li data-i18n="services.main3.sub3">Project Coordination</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-content">
+      <div class="site-footer-logo">
+        <a href="index.html" class="site-footer-wordmark" aria-label="Erika Joyce Bonje">Erika</a>
+      </div>
+      <p class="site-footer-name">Erika Joyce Bonje</p>
+      <p class="site-footer-copy"><small data-i18n="footer.rights">&copy; Erika Joyce Bonje. All rights reserved.</small></p>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scroll-top" type="button" data-i18n-aria="scroll.top" aria-label="Scroll to top">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+  const langKey = 'portfolio-lang';
+  const langToggle = document.getElementById('lang-toggle');
+  let currentLang = 'en';
+
+  const i18n = {
+    en: {
+      pageTitle: 'Erika Joyce Bonje — Biography',
+      'nav.biography': 'Biography',
+      'nav.skills': 'Skills',
+      'nav.portfolio': 'Portfolio',
+      'nav.certificates': 'Certificates',
+      'nav.contact': 'Contact',
+      'bio.back': '← Home',
+      'bio.role': 'Virtual Assistant · Bookkeeper',
+      'section.biography': 'Biography',
+      'about.p1': "I'm Erika Joyce Bonje, a dedicated Virtual Assistant with over five years of experience supporting business owners remotely. I specialize in administrative support, content coordination, email management, and keeping your operations running smoothly — so you can focus on what matters most.",
+      'about.p2': 'Whether you need help managing your inbox, creating social content, organizing files, or preparing reports, I bring structure, reliability, and clear communication to every task.',
+      'about.services': 'Services',
+      'services.main1': 'Administrative Tasks',
+      'services.main1.sub1': 'Scheduling',
+      'services.main1.sub2': 'Email Management',
+      'services.main1.sub3': 'Document Organization',
+      'services.main1.sub4': 'Data Management',
+      'services.main3': 'Business Support',
+      'services.main3.sub1': 'Customer Support',
+      'services.main3.sub2': 'Research & Reporting',
+      'services.main3.sub3': 'Project Coordination',
+      'footer.rights': '© Erika Joyce Bonje. All rights reserved.',
+      'scroll.top': 'Scroll to top',
+      'lang.switchToZh': 'Switch to Chinese',
+      'lang.switchToEn': 'Switch to English'
+    },
+    zh: {
+      pageTitle: 'Erika Joyce Bonje — 个人简介',
+      'nav.biography': '个人简介',
+      'nav.skills': '技能工具',
+      'nav.portfolio': '作品集',
+      'nav.certificates': '证书培训',
+      'nav.contact': '联系',
+      'bio.back': '← 首页',
+      'bio.role': '虚拟助理 · 簿记员',
+      'section.biography': '个人简介',
+      'about.p1': '我是 Erika Joyce Bonje，一名专注的虚拟助理，拥有五年以上远程支持企业主的丰富经验。我擅长行政支持、内容协调、邮件管理，并确保您的业务顺畅运转——让您专注于最重要的事情。',
+      'about.p2': '无论您需要管理收件箱、创作社交媒体内容、整理文件还是准备报告，我都会为每项任务带来条理、可靠与清晰的沟通。',
+      'about.services': '服务项目',
+      'services.main1': '行政事务',
+      'services.main1.sub1': '日程安排',
+      'services.main1.sub2': '邮件管理',
+      'services.main1.sub3': '文档整理',
+      'services.main1.sub4': '数据管理',
+      'services.main3': '业务支持',
+      'services.main3.sub1': '客户支持',
+      'services.main3.sub2': '调研与报告',
+      'services.main3.sub3': '项目协调',
+      'footer.rights': '© Erika Joyce Bonje 版权所有。',
+      'scroll.top': '回到顶部',
+      'lang.switchToZh': '切换到中文',
+      'lang.switchToEn': '切换到英文'
+    }
+  };
+
+  function setLang(lang) {
+    currentLang = lang;
+    const t = i18n[lang];
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.title = t.pageTitle;
+    localStorage.setItem(langKey, lang);
+
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.dataset.i18n;
+      if (t[key] !== undefined) el.textContent = t[key];
+    });
+
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+      const key = el.dataset.i18nAria;
+      if (t[key] !== undefined) el.setAttribute('aria-label', t[key]);
+    });
+
+    langToggle.textContent = lang === 'en' ? '中文' : 'EN';
+    langToggle.setAttribute('aria-label', lang === 'en' ? t['lang.switchToZh'] : t['lang.switchToEn']);
+  }
+
+  langToggle.addEventListener('click', () => setLang(currentLang === 'en' ? 'zh' : 'en'));
+
+  const savedLang = localStorage.getItem(langKey);
+  if (savedLang === 'zh') setLang('zh');
+
+  const navToggle = document.getElementById('nav-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  const siteHeader = document.getElementById('site-header');
+
+  navToggle.addEventListener('click', () => {
+    const open = navMenu.classList.toggle('open');
+    navMenu.classList.toggle('is-open', open);
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('nav-open', open);
+  });
+
+  navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('open', 'is-open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('nav-open');
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    siteHeader.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  const themeKey = 'portfolio-theme';
+  const themes = ['dark', 'cream', 'gold'];
+  const themeBtns = document.querySelectorAll('.theme-btn');
+
+  function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    themeBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.theme === theme));
+    localStorage.setItem(themeKey, theme);
+  }
+
+  const savedTheme = localStorage.getItem(themeKey);
+  if (savedTheme && themes.includes(savedTheme)) setTheme(savedTheme);
+
+  themeBtns.forEach(btn => btn.addEventListener('click', () => setTheme(btn.dataset.theme)));
+
+  const scrollTopBtn = document.getElementById('scroll-top');
+  window.addEventListener('scroll', () => {
+    scrollTopBtn.classList.toggle('visible', window.scrollY > 400);
+  }, { passive: true });
+  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  if (typeof gsap !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from('.bio-back', { y: 20, opacity: 0, duration: 0.7, ease: 'power3.out' });
+
+    gsap.from('.bio-hero-photo, .bio-hero-label, .bio-hero-name, .bio-hero-role', {
+      y: 32, opacity: 0, duration: 0.85, stagger: 0.1, ease: 'power3.out', delay: 0.1
+    });
+
+    gsap.from('.bio-hero-text p', {
+      y: 24, opacity: 0, duration: 0.75, stagger: 0.12, ease: 'power3.out', delay: 0.35
+    });
+
+    gsap.from('.bio-block-title', {
+      y: 24, opacity: 0, duration: 0.7, ease: 'power3.out',
+      scrollTrigger: { trigger: '.bio-block', start: 'top 88%' }
+    });
+
+    gsap.from('.service-group', {
+      y: 24, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out',
+      scrollTrigger: { trigger: '.service-groups', start: 'top 85%' }
+    });
+
+    gsap.from('.service-subs li', {
+      x: -12, opacity: 0, duration: 0.55, stagger: 0.06, ease: 'power3.out',
+      scrollTrigger: { trigger: '.service-groups', start: 'top 82%' }
+    });
+  }
+</script>
+
+</body>
+</html>

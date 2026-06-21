@@ -9,7 +9,7 @@
   document.documentElement.classList.add('hero-anim-pending');
 
   var theme = localStorage.getItem('portfolio-theme');
-  if (theme && ['dark', 'cream', 'gold', 'gold-light'].indexOf(theme) !== -1) {
+  if (theme && ['dark', 'cream', 'gold'].indexOf(theme) !== -1) {
     document.documentElement.setAttribute('data-theme', theme);
   }
 })();
@@ -78,7 +78,6 @@
   [data-theme="gold"] .header-subscribe:hover,
   [data-theme="gold"] .hero-downloads a:hover,
   [data-theme="gold"] .btn:hover,
-  [data-theme="gold"] .view-all:hover,
   [data-theme="gold"] .tool-pill:hover {
     color: #ffffff;
     border-color: rgba(255, 255, 255, 0.7);
@@ -88,18 +87,6 @@
   [data-theme="gold"] .btn-primary {
     background: #ffffff;
     color: var(--color-gold);
-  }
-
-  [data-theme="gold-light"] {
-    --bg: var(--color-gold-light);
-    --bg-alt: #f2e8cc;
-    --bg-elevated: rgba(255, 255, 255, 0.45);
-    --ink: var(--color-dark);
-    --ink-soft: rgba(30, 31, 35, 0.72);
-    --ink-muted: rgba(30, 31, 35, 0.5);
-    --border: rgba(30, 31, 35, 0.12);
-    --accent-soft: rgba(184, 144, 71, 0.15);
-    --typewriter-color: #7a5c1e;
   }
 
   [data-theme="cream"] {
@@ -237,11 +224,12 @@
   }
 
   html[lang="zh-CN"] .section-heading,
-  html[lang="zh-CN"] .statement-title,
-  html[lang="zh-CN"] .hero-identity h1,
-  html[lang="zh-CN"] .work-info h3,
-  html[lang="zh-CN"] .project-modal-title {
+  html[lang="zh-CN"] .statement-title {
     font-family: 'Noto Sans SC', var(--serif), serif;
+  }
+
+  html[lang="zh-CN"] .hero-identity h1 {
+    font-family: var(--serif);
   }
 
   a { color: inherit; }
@@ -324,14 +312,14 @@
     padding: 4px;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
-    border-radius: 999px;
+    border-radius: 0;
     transition: background 0.35s ease, border-color 0.35s ease;
   }
 
   .theme-btn {
     width: 18px;
     height: 18px;
-    border-radius: 50%;
+    border-radius: 0;
     border: 2px solid transparent;
     cursor: pointer;
     padding: 0;
@@ -349,7 +337,6 @@
   .theme-btn[data-theme="dark"] { background: #1E1F23; }
   .theme-btn[data-theme="cream"] { background: #F7F5F2; border-color: rgba(30,31,35,0.15); }
   .theme-btn[data-theme="gold"] { background: #B89047; }
-  .theme-btn[data-theme="gold-light"] { background: #E8D5A6; }
 
   /* Language toggle */
   .lang-toggle {
@@ -360,7 +347,7 @@
     color: var(--ink);
     background: var(--bg-elevated);
     border: 1px solid var(--border);
-    border-radius: 999px;
+    border-radius: 0;
     padding: 6px 12px;
     cursor: pointer;
     transition: color 0.2s, border-color 0.2s, background 0.35s ease;
@@ -496,6 +483,8 @@
 
   .nav-menu-mobile { display: none; }
 
+  .nav-menu-socials { display: none; list-style: none; }
+
   body.nav-open { overflow: hidden; }
 
   /* ── HERO / PROFILE ── */
@@ -509,13 +498,27 @@
   }
 
   .hero-inner {
-    max-width: 1280px;
+    max-width: 760px;
     width: 100%;
     margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: clamp(48px, 8vw, 120px);
-    align-items: start;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: clamp(40px, 6vw, 64px);
+  }
+
+  .hero-intro,
+  .hero-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .hero-details {
+    max-width: 560px;
+    gap: 32px;
   }
 
   .hero-profile-label {
@@ -540,7 +543,7 @@
 
   .hero-identity h1 {
     font-family: var(--serif);
-    font-size: clamp(36px, 4.5vw, 54px);
+    font-size: clamp(36px, 6vw, 56px);
     font-weight: 300;
     line-height: 1.18;
     letter-spacing: 0.01em;
@@ -557,14 +560,14 @@
     text-transform: uppercase;
     color: var(--ink-muted);
     line-height: 2;
-    margin-bottom: 32px;
+    margin-bottom: 0;
   }
 
   .hero-downloads {
     display: flex;
     gap: 24px;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    justify-content: center;
   }
 
   .hero-downloads a {
@@ -581,25 +584,11 @@
 
   .hero-downloads a:hover { color: var(--gold); border-color: var(--gold); }
 
-  .hero-statement { padding-top: 48px; }
-
-  .hero-profile {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    text-align: right;
-  }
-
-  .hero-profile > * {
-    width: 100%;
-    max-width: 380px;
-  }
-
   .hero-awards {
     font-size: 11px;
     letter-spacing: 0.06em;
     color: var(--ink-muted);
-    margin-bottom: 48px;
+    margin-bottom: 0;
     line-height: 2;
   }
 
@@ -615,22 +604,27 @@
 
   .statement-title {
     font-family: var(--serif);
-    font-size: clamp(28px, 3.5vw, 40px);
+    font-size: clamp(26px, 4vw, 44px);
     font-weight: 300;
     font-style: italic;
-    line-height: 1.3;
+    line-height: 1.35;
     color: var(--ink);
-    margin-bottom: 12px;
+    margin-bottom: 28px;
+    max-width: 680px;
+  }
+
+  .hero-intro .hero-identity {
+    margin-bottom: 16px;
   }
 
   .hero-typewriter {
     font-family: var(--serif);
-    font-size: clamp(20px, 2.4vw, 28px);
+    font-size: clamp(20px, 2.8vw, 30px);
     font-weight: 400;
     font-style: italic;
     line-height: 1.4;
     min-height: 1.5em;
-    margin-bottom: 24px;
+    margin-bottom: 0;
   }
 
   .hero-typewriter-text {
@@ -672,13 +666,15 @@
     font-size: 14px;
     color: var(--ink-muted);
     line-height: 2.28;
-    max-width: 480px;
+    max-width: 100%;
   }
 
   .hero-stats {
     display: flex;
     gap: 40px;
-    margin-top: 48px;
+    justify-content: center;
+    width: 100%;
+    margin-top: 0;
     padding-top: 32px;
     border-top: 1px solid var(--border);
   }
@@ -905,7 +901,6 @@
 
   .skill-category,
   .cert-card,
-  .work-card,
   .contact-item,
   .tag {
     will-change: transform;
@@ -914,10 +909,8 @@
   @media (prefers-reduced-motion: reduce) {
     .skill-category,
     .cert-card,
-    .work-card,
     .contact-item,
-    .tag,
-    .work-preview {
+    .tag {
       will-change: auto;
     }
   }
@@ -954,489 +947,6 @@
   }
 
   .tool-pill:hover { color: var(--gold); }
-
-  /* ── SAMPLE WORK ── */
-  #work { background: var(--bg); }
-
-  .work-filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 24px;
-    margin-bottom: 48px;
-  }
-
-  .filter-btn {
-    font-family: var(--sans);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 0 0 4px;
-    border: none;
-    border-bottom: 1px solid transparent;
-    background: none;
-    color: var(--ink-muted);
-    cursor: pointer;
-    transition: color 0.2s, border-color 0.2s;
-  }
-
-  .filter-btn:hover,
-  .filter-btn.active { color: var(--ink); border-bottom-color: var(--ink); }
-
-  .work-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 40px 32px;
-    border-top: 1px solid var(--border);
-    padding-top: 48px;
-  }
-
-  .work-card {
-    cursor: default;
-  }
-
-  .work-preview {
-    aspect-ratio: 4/3;
-    background: var(--bg-alt);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin-bottom: 16px;
-    position: relative;
-    transform-origin: center center;
-    will-change: transform;
-  }
-
-  .work-info {
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .work-info h3 { order: 1; }
-  .work-type { order: 2; }
-
-  .work-info h3 {
-    font-family: var(--serif);
-    font-size: 16px;
-    font-weight: 400;
-    font-style: italic;
-    color: var(--ink);
-    margin-bottom: 4px;
-    line-height: 1.4;
-  }
-
-  .work-type {
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 0.06em;
-    color: var(--ink-muted);
-    text-transform: lowercase;
-  }
-
-  .work-info p { display: none; }
-
-  .work-view-btn {
-    position: absolute;
-    inset: 0;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    width: 100%;
-    height: 100%;
-    background: rgba(30, 31, 35, 0.5);
-    border: none;
-    opacity: 0;
-    visibility: hidden;
-    color: #ffffff;
-    font-family: var(--sans);
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: opacity 0.3s, visibility 0.3s, background 0.3s;
-  }
-
-  .work-view-btn svg {
-    width: 16px;
-    height: 16px;
-    stroke: #ffffff;
-    fill: none;
-    stroke-width: 1.75;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    transition: transform 0.25s ease;
-  }
-
-  .work-card:hover .work-view-btn,
-  .work-view-btn:hover,
-  .work-view-btn:focus-visible {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .work-view-btn:hover {
-    background: rgba(30, 31, 35, 0.72);
-    color: #ffffff;
-  }
-
-  .work-view-btn:hover svg {
-    transform: translateX(4px);
-  }
-
-  .work-card:hover { opacity: 1; }
-
-  /* Project modal */
-  .project-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 200;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s, visibility 0.3s;
-  }
-
-  .project-modal.open {
-    opacity: 1;
-    visibility: visible;
-  }
-
-  .project-modal-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(30, 31, 35, 0.55);
-    backdrop-filter: blur(4px);
-  }
-
-  .project-modal-dialog {
-    position: relative;
-    width: 100%;
-    max-width: 720px;
-    max-height: 90vh;
-    overflow-y: auto;
-    background: var(--bg);
-    border: 1px solid var(--border);
-    padding: 40px;
-    transform: translateY(20px) scale(0.98);
-    transition: transform 0.3s ease, background 0.35s ease;
-  }
-
-  .project-modal.open .project-modal-dialog {
-    transform: translateY(0) scale(1);
-  }
-
-  .project-modal-close {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: none;
-    border: 1px solid var(--border);
-    color: var(--ink);
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s, border-color 0.2s;
-  }
-
-  .project-modal-close:hover {
-    background: var(--ink);
-    color: var(--bg);
-    border-color: var(--ink);
-  }
-
-  .project-modal-close svg {
-    width: 16px;
-    height: 16px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 1.75;
-    stroke-linecap: round;
-  }
-
-  .project-modal-type {
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    margin-bottom: 10px;
-  }
-
-  .project-modal-title {
-    font-family: var(--serif);
-    font-size: clamp(22px, 3vw, 28px);
-    font-weight: 300;
-    font-style: italic;
-    color: var(--ink);
-    line-height: 1.3;
-    margin-bottom: 28px;
-    padding-right: 40px;
-  }
-
-  .project-modal-preview {
-    background: var(--bg-alt);
-    aspect-ratio: 16/10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin-bottom: 28px;
-  }
-
-  .project-modal-preview > * {
-    width: 100%;
-    height: 100%;
-  }
-
-  .project-modal-desc {
-    font-size: 14px;
-    color: var(--ink-muted);
-    line-height: 2.28;
-    margin-bottom: 20px;
-  }
-
-  .project-modal-meta {
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    color: var(--ink-soft);
-    padding-top: 20px;
-    border-top: 1px solid var(--border);
-    line-height: 2;
-  }
-
-  .project-modal-meta strong {
-    font-weight: 500;
-    color: var(--ink);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    font-size: 10px;
-    display: block;
-    margin-bottom: 4px;
-  }
-
-  body.modal-open { overflow: hidden; }
-
-  .view-all {
-    display: inline-block;
-    margin-top: 56px;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink);
-    text-decoration: none;
-    border-bottom: 1px solid var(--ink);
-    padding-bottom: 3px;
-    transition: color 0.2s, border-color 0.2s;
-  }
-
-  .view-all:hover { color: var(--gold); border-color: var(--gold); }
-  .mock-social {
-    background: var(--bg-alt);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    height: 100%;
-    padding: 20px;
-  }
-
-  .mock-social-box {
-    width: 85%;
-    background: white;
-    border-radius: 12px;
-    padding: 16px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-    text-align: left;
-  }
-
-  .mock-social-header {
-    display: flex;
-    gap: 8px;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-
-  .mock-avatar-sm {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--ink);
-  }
-
-  .mock-social-text {
-    font-size: 10px;
-    color: var(--ink-soft);
-    line-height: 1.5;
-  }
-
-  .mock-social-img {
-    width: 100%;
-    height: 60px;
-    background: linear-gradient(90deg, var(--gold), var(--gold-light));
-    border-radius: 8px;
-    margin-top: 8px;
-  }
-
-  .mock-caption {
-    background: #fafafa;
-    padding: 20px;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .mock-caption p {
-    font-size: 10px;
-    color: var(--ink-soft);
-    line-height: 1.7;
-    font-style: italic;
-  }
-
-  .mock-caption-tags {
-    margin-top: 10px;
-    font-size: 9px;
-    color: var(--accent);
-    font-weight: 600;
-  }
-
-  .mock-calendar {
-    background: white;
-    padding: 12px;
-    height: 100%;
-    font-size: 8px;
-  }
-
-  .cal-header {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 2px;
-    margin-bottom: 6px;
-    font-weight: 700;
-    color: var(--ink-muted);
-    text-align: center;
-  }
-
-  .cal-grid {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 2px;
-  }
-
-  .cal-day {
-    aspect-ratio: 1;
-    background: var(--surface);
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 7px;
-    color: var(--ink-muted);
-  }
-
-  .cal-day.has-post {
-    background: var(--accent-soft);
-    color: var(--accent);
-    font-weight: 700;
-  }
-
-  .mock-email {
-    background: white;
-    padding: 14px;
-    height: 100%;
-    text-align: left;
-  }
-
-  .email-subject {
-    font-size: 10px;
-    font-weight: 700;
-    color: var(--ink);
-    margin-bottom: 8px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .email-body {
-    font-size: 8px;
-    color: var(--ink-soft);
-    line-height: 1.6;
-  }
-
-  .mock-spreadsheet {
-    background: white;
-    padding: 10px;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  .sheet-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 7px;
-  }
-
-  .sheet-table th {
-    background: var(--ink);
-    color: white;
-    padding: 4px 6px;
-    text-align: left;
-    font-weight: 600;
-  }
-
-  .sheet-table td {
-    padding: 4px 6px;
-    border-bottom: 1px solid var(--border);
-    color: var(--ink-soft);
-  }
-
-  .sheet-table tr:nth-child(even) td { background: var(--surface); }
-
-  .mock-design {
-    background: linear-gradient(160deg, var(--dark) 0%, #2a2b30 100%);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    text-align: center;
-  }
-
-  .mock-design h4 {
-    font-family: var(--serif);
-    font-size: 14px;
-    color: white;
-    margin-bottom: 6px;
-  }
-
-  .mock-design p {
-    font-size: 8px;
-    color: rgba(255,255,255,0.7);
-    line-height: 1.5;
-  }
-
-  .mock-design-btn {
-    margin-top: 12px;
-    background: var(--gold);
-    color: var(--dark);
-    font-size: 8px;
-    font-weight: 700;
-    padding: 6px 14px;
-    border-radius: 999px;
-  }
 
   /* ── CERTIFICATES ── */
   #certificates { background: var(--bg); }
@@ -1690,30 +1200,108 @@
 
   .form-group textarea { resize: vertical; min-height: 100px; }
 
-  /* ── FOOTER ── */
-  footer {
+  /* ── FOOTER (seiyamazaki-style) ── */
+  .site-footer {
     background: var(--bg);
-    border-top: 1px solid var(--border);
-    color: var(--ink-muted);
-    padding: 32px clamp(24px, 5%, 56px);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 16px;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    transition: background 0.35s ease, color 0.35s ease, border-color 0.35s ease;
+    transition: background 0.35s ease;
   }
 
-  footer strong {
+  .site-footer-inner {
+    width: 100%;
+  }
+
+  .site-footer-content {
+    padding: 20px clamp(24px, 5%, 80px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+
+  [data-theme="cream"] .site-footer-content {
+    background: #000000;
+    color: #ffffff;
+  }
+
+  [data-theme="gold"] .site-footer-content {
+    background: #ffffff;
+    color: var(--color-dark);
+  }
+
+  [data-theme="dark"] .site-footer-content {
+    background: var(--color-gold);
+    color: #ffffff;
+  }
+
+  .site-footer-logo {
+    max-width: 344px;
+    width: 100%;
+  }
+
+  .site-footer-wordmark {
+    display: block;
+    font-family: 'Bastliga One', cursive;
+    font-size: clamp(3.5rem, 14vw, 6rem);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+    color: inherit;
+    text-decoration: none;
+    line-height: 0.95;
+    transition: opacity 0.2s, color 0.35s ease;
+  }
+
+  .site-footer-wordmark:hover { opacity: 0.82; }
+
+  .site-footer-name {
     font-family: var(--sans);
-    font-weight: 500;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--ink);
-    display: inline;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.5em;
+    line-height: 1;
+    margin-top: 20px;
+    color: inherit;
+    transition: color 0.35s ease;
+  }
+
+  [data-theme="cream"] .site-footer-wordmark,
+  [data-theme="cream"] .site-footer-name,
+  [data-theme="dark"] .site-footer-wordmark,
+  [data-theme="dark"] .site-footer-name {
+    color: #ffffff;
+  }
+
+  .site-footer-copy {
+    font-family: var(--sans);
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 20px;
+    transition: color 0.35s ease;
+  }
+
+  [data-theme="cream"] .site-footer-copy {
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  [data-theme="gold"] .site-footer-copy {
+    color: rgba(30, 31, 35, 0.72);
+  }
+
+  [data-theme="dark"] .site-footer-copy {
+    color: rgba(255, 255, 255, 0.88);
+  }
+
+  .site-footer-copy small {
+    font-size: inherit;
+    letter-spacing: 0.04em;
+  }
+
+  @media (max-width: 1024px) {
+    .site-footer-content { padding: 50px 20px 16px; }
+    .site-footer-logo { max-width: 268px; }
+    .site-footer-name { margin-top: 22px; }
+    .site-footer-copy { margin-top: 58px; }
   }
 
   /* Scroll to top */
@@ -1762,19 +1350,9 @@
 
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
-    .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-    .hero-statement { padding-top: 0; order: 2; }
-    .hero-profile {
-      order: 1;
-      align-items: center;
-      text-align: center;
-    }
-    .hero-profile > * { max-width: 320px; }
-    .hero-photo { margin-left: auto; margin-right: auto; }
     .skills-layout { grid-template-columns: repeat(2, 1fr); }
     .skill-category:nth-child(3n) { border-right: 1px solid var(--border); }
     .skill-category:nth-child(2n) { border-right: none; }
-    .work-grid { grid-template-columns: repeat(2, 1fr); }
     .cert-grid { grid-template-columns: 1fr; }
     .cert-card { border-right: none; }
     .about-grid { grid-template-columns: 1fr; }
@@ -1830,15 +1408,46 @@
 
     .nav-menu-mobile { display: list-item; }
 
+    .nav-menu-socials {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      width: 100%;
+      margin-top: 8px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .nav-mobile-social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--border);
+      color: var(--ink);
+      text-decoration: none;
+      transition: color 0.2s, border-color 0.2s, background 0.2s;
+    }
+
+    .nav-mobile-social-link:hover {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .nav-mobile-social-link .icon {
+      width: 18px;
+      height: 18px;
+    }
+
     .nav-bar { position: relative; flex-wrap: wrap; }
 
     .skills-layout { grid-template-columns: 1fr; }
     .skill-category { border-right: none !important; padding-right: 0 !important; }
-    .work-grid { grid-template-columns: 1fr; }
     .cert-card { grid-template-columns: 1fr; }
     .cert-screenshot { border-left: none; border-top: 1px solid var(--border); }
     .hero-stats { flex-wrap: wrap; gap: 24px; }
-    .project-modal-dialog { padding: 28px 24px; }
   }
 </style>
 </head>
@@ -1862,7 +1471,6 @@
           <button type="button" class="theme-btn" data-theme="dark" aria-label="Dark theme" title="Dark #1E1F23"></button>
           <button type="button" class="theme-btn active" data-theme="cream" aria-label="Cream theme" title="Cream #F7F5F2"></button>
           <button type="button" class="theme-btn" data-theme="gold" aria-label="Gold theme" title="Gold #B89047"></button>
-          <button type="button" class="theme-btn" data-theme="gold-light" aria-label="Gold light theme" title="Gold Light #E8D5A6"></button>
         </div>
         <a href="#contact" class="header-subscribe" data-i18n="nav.contact">Contact</a>
         <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
@@ -1876,11 +1484,19 @@
     </div>
     <nav class="nav-bar">
       <ul class="nav-menu" id="nav-menu">
-        <li><a href="#about" data-i18n="nav.biography">Biography</a></li>
+        <li><a href="biography.html" data-i18n="nav.biography">Biography</a></li>
         <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
-        <li><a href="#work" data-i18n="nav.portfolio">Portfolio</a></li>
+        <li><a href="portfolio.html" data-i18n="nav.portfolio">Portfolio</a></li>
         <li><a href="#certificates" data-i18n="nav.certificates">Certificates</a></li>
         <li class="nav-menu-mobile"><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+        <li class="nav-menu-socials">
+          <a href="https://linkedin.com/in/erikabonje" class="nav-mobile-social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><path d="M2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="mailto:erika.bonje@email.com" class="nav-mobile-social-link" aria-label="Email">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          </a>
+        </li>
       </ul>
       <div class="nav-socials">
         <a href="https://linkedin.com/in/erikabonje" target="_blank" rel="noopener">LinkedIn</a>
@@ -1893,16 +1509,20 @@
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-inner">
-    <div class="hero-statement">
+    <div class="hero-intro">
+      <h2 class="statement-title" data-i18n="hero.title">Great things are built in quiet moments that seem too small to matter</h2>
+      <div class="hero-identity">
+        <h1>Erika Joyce<br>Bonje</h1>
+      </div>
+      <p class="hero-typewriter" aria-live="polite">
+        <span class="hero-typewriter-text" id="hero-typewriter-text"></span><span class="hero-typewriter-cursor" aria-hidden="true">|</span>
+      </p>
+    </div>
+    <div class="hero-details">
       <div class="hero-awards">
         <strong data-i18n="hero.experience">Experience</strong>
         <span data-i18n="hero.awards">5+ Years Remote VA · 40+ Clients Served · QuickBooks Certified</span>
       </div>
-      <h2 class="statement-title" data-i18n="hero.title">Your reliable partner behind the scenes.</h2>
-      <p class="hero-typewriter" aria-live="polite">
-        <span class="hero-typewriter-text" id="hero-typewriter-text"></span><span class="hero-typewriter-cursor" aria-hidden="true">|</span>
-      </p>
-      <!-- <span class="statement-divider">｜</span> -->
       <p class="statement-text" data-i18n="hero.text">
         Erika Joyce Bonje is a detail-oriented Virtual Assistant and Bookkeeper who helps entrepreneurs and small business owners stay organized, productive, and focused on growth — handling admin, content, and operations with precision and care.
       </p>
@@ -1920,94 +1540,9 @@
           <div class="hero-stat-label" data-i18n="hero.stat.tools">Tools</div>
         </div>
       </div>
-    </div>
-    <div class="hero-profile">
-      <p class="hero-profile-label" data-i18n="hero.profile">Profile</p>
-      <img src="assets/profile-hero.png" alt="Erika Joyce Bonje" class="hero-photo" width="380" height="507" decoding="async" fetchpriority="high">
-      <div class="hero-identity">
-        <h1>Erika Joyce<br>Bonje</h1>
-        <p class="hero-role" data-i18n-html="hero.role">Virtual Assistant,<br>Bookkeeper</p>
-      </div>
       <div class="hero-downloads">
-        <a href="#work" data-i18n="hero.link.portfolio">Portfolio</a>
-        <a href="#about" data-i18n="hero.link.biography">Biography</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 1. ABOUT ME -->
-<section id="about">
-  <div class="section-inner">
-    <h2 class="section-heading" data-i18n="section.biography">Biography</h2>
-
-    <div class="about-grid">
-      <div class="about-photo-wrap">
-        <img src="assets/profile-about.png" alt="Erika Joyce Bonje" class="about-photo">
-        <div class="about-photo-label">Erika Joyce Bonje</div>
-      </div>
-
-      <div class="about-main">
-      <div class="about-content">
-        <p data-i18n="about.p1">
-          I'm Erika Joyce Bonje, a dedicated Virtual Assistant with over five years of experience supporting business owners remotely. I specialize in administrative support, content coordination, email management, and keeping your operations running smoothly — so you can focus on what matters most.
-        </p>
-        <p data-i18n="about.p2">
-          Whether you need help managing your inbox, creating social content, organizing files, or preparing reports, I bring structure, reliability, and clear communication to every task.
-        </p>
-        <p class="about-services-label" data-i18n="about.services">Services</p>
-        <div class="about-services">
-          <span class="tag" data-i18n="about.tag1">Email &amp; Calendar Management</span>
-          <span class="tag" data-i18n="about.tag2">Social Media Support</span>
-          <span class="tag" data-i18n="about.tag3">Content Creation</span>
-          <span class="tag" data-i18n="about.tag4">Data Entry &amp; Spreadsheets</span>
-          <span class="tag" data-i18n="about.tag5">Document Organization</span>
-          <span class="tag" data-i18n="about.tag6">Customer Support</span>
-          <span class="tag" data-i18n="about.tag7">Research &amp; Reporting</span>
-          <span class="tag" data-i18n="about.tag8">Project Coordination</span>
-        </div>
-      </div>
-
-      <div class="target-clients">
-        <h3 data-i18n="about.who">Who I Work With</h3>
-        <ul class="client-list">
-          <li>
-            <span class="client-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M4.5 16.5c0-5 3.5-9 7.5-9s7.5 4 7.5 9"/><path d="M12 7.5V4"/><path d="M9 4.5h6"/><path d="M8 20l-1 2M16 20l1 2"/></svg></span>
-            <div>
-              <strong data-i18n="about.client1.title">Entrepreneurs &amp; Solopreneurs</strong>
-              <span data-i18n="about.client1.desc">Busy founders who need a trusted right hand for admin and content tasks.</span>
-            </div>
-          </li>
-          <li>
-            <span class="client-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M3 21h18"/><path d="M6 21V7l6-4 6 4v14"/><path d="M9 21v-6h6v6"/><path d="M9 10h.01M15 10h.01"/></svg></span>
-            <div>
-              <strong data-i18n="about.client2.title">Small Business Owners</strong>
-              <span data-i18n="about.client2.desc">Growing teams that need organized systems without hiring full-time staff.</span>
-            </div>
-          </li>
-          <li>
-            <span class="client-icon"><svg class="icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><path d="M12 12v.01"/></svg></span>
-            <div>
-              <strong data-i18n="about.client3.title">Coaches &amp; Consultants</strong>
-              <span data-i18n="about.client3.desc">Professionals who want inbox, calendar, and client communication handled.</span>
-            </div>
-          </li>
-          <li>
-            <span class="client-icon"><svg class="icon" viewBox="0 0 24 24"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 4h2l2.5 12h11L20 8H6"/></svg></span>
-            <div>
-              <strong data-i18n="about.client4.title">E-commerce Brands</strong>
-              <span data-i18n="about.client4.desc">Online sellers needing product listings, customer emails, and content support.</span>
-            </div>
-          </li>
-          <li>
-            <span class="client-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 001 1h1v-4H4a1 1 0 00-1 1z"/><path d="M7 10v4h11l2-7H9"/><path d="M14 3a3 3 0 013 3v1"/></svg></span>
-            <div>
-              <strong data-i18n="about.client5.title">Marketing Agencies</strong>
-              <span data-i18n="about.client5.desc">Teams looking for VA support on content calendars, captions, and designs.</span>
-            </div>
-          </li>
-        </ul>
-      </div>
+        <a href="portfolio.html" data-i18n="hero.link.portfolio">Portfolio</a>
+        <a href="biography.html" data-i18n="hero.link.biography">Biography</a>
       </div>
     </div>
   </div>
@@ -2092,145 +1627,6 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- 3. SAMPLE WORK -->
-<section id="work">
-  <div class="section-inner">
-    <h2 class="section-heading" data-i18n="section.portfolio">Portfolio</h2>
-
-    <div class="work-filters">
-      <button class="filter-btn active" data-filter="all" data-i18n="filter.all">All</button>
-      <button class="filter-btn" data-filter="social" data-i18n="filter.social">Social Media</button>
-      <button class="filter-btn" data-filter="content" data-i18n="filter.content">Content</button>
-      <button class="filter-btn" data-filter="email" data-i18n="filter.email">Email</button>
-      <button class="filter-btn" data-filter="data" data-i18n="filter.data">Spreadsheets</button>
-      <button class="filter-btn" data-filter="design" data-i18n="filter.design">Designs</button>
-    </div>
-
-    <div class="work-grid">
-
-      <article class="work-card" data-category="social" data-meta-en="Tools: Canva · Meta Business Suite&#10;Deliverable: Instagram post + caption&#10;Client: Lifestyle brand (mock)" data-meta-zh="工具：Canva · Meta Business Suite&#10;交付物：Instagram 帖子 + 文案&#10;客户：生活方式品牌（示例）">
-        <div class="work-preview">
-          <div class="mock-social">
-            <div class="mock-social-box">
-              <div class="mock-social-header">
-                <div class="mock-avatar-sm"></div>
-                <div>
-                  <div style="font-size:9px;font-weight:700;color:var(--ink);">Bloom Studio</div>
-                  <div style="font-size:8px;color:var(--ink-muted);">2 hours ago</div>
-                </div>
-              </div>
-              <div class="mock-social-text">✨ New collection dropping this Friday! Early access for our VIP list — link in bio.</div>
-              <div class="mock-social-img"></div>
-            </div>
-          </div>
-        </div>
-        <div class="work-info">
-          <div class="work-type" data-i18n="work1.type">Social Media Post</div>
-          <h3 data-i18n="work1.title">Instagram Product Launch Post</h3>
-          <p data-i18n="work1.desc">Branded visual post with caption for a lifestyle brand product drop.</p>
-        </div>
-      </article>
-
-      <article class="work-card" data-category="content" data-meta-en="Tools: Google Docs · Grammarly&#10;Deliverable: Social caption + hashtags&#10;Platform: Instagram / Facebook" data-meta-zh="工具：Google Docs · Grammarly&#10;交付物：社交媒体文案 + 话题标签&#10;平台：Instagram / Facebook">
-        <div class="work-preview">
-          <div class="mock-caption">
-            <p>"Monday motivation starts with a plan. This week, we're focusing on consistency over perfection. What's one small win you're celebrating today? Drop it below — we'd love to cheer you on! 👏"</p>
-            <div class="mock-caption-tags">#MondayMotivation #SmallBusiness #ConsistencyWins</div>
-          </div>
-        </div>
-        <div class="work-info">
-          <div class="work-type" data-i18n="work2.type">Caption Writing</div>
-          <h3 data-i18n="work2.title">Engagement-Focused Caption</h3>
-          <p data-i18n="work2.desc">Conversational caption with hashtags designed to boost comments and reach.</p>
-        </div>
-      </article>
-
-      <article class="work-card" data-category="content" data-meta-en="Tools: Google Sheets · Trello&#10;Deliverable: Monthly content calendar&#10;Includes: Post dates, themes, platform tags" data-meta-zh="工具：Google Sheets · Trello&#10;交付物：月度内容日历&#10;包含：发布日期、主题、平台标签">
-        <div class="work-preview">
-          <div class="mock-calendar">
-            <div style="font-weight:700;font-size:9px;margin-bottom:8px;color:var(--ink);">March 2025 — Content Calendar</div>
-            <div class="cal-header">
-              <span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span>
-            </div>
-            <div class="cal-grid">
-              <div class="cal-day"></div><div class="cal-day"></div><div class="cal-day"></div><div class="cal-day"></div><div class="cal-day"></div><div class="cal-day">1</div><div class="cal-day">2</div>
-              <div class="cal-day has-post">3</div><div class="cal-day">4</div><div class="cal-day has-post">5</div><div class="cal-day">6</div><div class="cal-day has-post">7</div><div class="cal-day">8</div><div class="cal-day">9</div>
-              <div class="cal-day has-post">10</div><div class="cal-day">11</div><div class="cal-day has-post">12</div><div class="cal-day">13</div><div class="cal-day has-post">14</div><div class="cal-day">15</div><div class="cal-day">16</div>
-              <div class="cal-day">17</div><div class="cal-day has-post">18</div><div class="cal-day">19</div><div class="cal-day has-post">20</div><div class="cal-day">21</div><div class="cal-day">22</div><div class="cal-day">23</div>
-            </div>
-          </div>
-        </div>
-        <div class="work-info">
-          <div class="work-type" data-i18n="work3.type">Content Calendar</div>
-          <h3 data-i18n="work3.title">Monthly Social Media Plan</h3>
-          <p data-i18n="work3.desc">Organized posting schedule with content themes, platforms, and status tracking.</p>
-        </div>
-      </article>
-
-      <article class="work-card" data-category="email" data-meta-en="Tools: Google Docs · Mailchimp&#10;Deliverable: Welcome email template&#10;Includes: Subject line, body copy, CTA" data-meta-zh="工具：Google Docs · Mailchimp&#10;交付物：欢迎邮件模板&#10;包含：主题行、正文、行动号召">
-        <div class="work-preview">
-          <div class="mock-email">
-            <div class="email-subject">Subject: Welcome to the Family — Here's 10% Off Your First Order 🎁</div>
-            <div class="email-body">
-              Hi [First Name],<br><br>
-              Thank you for subscribing! We're thrilled to have you.<br><br>
-              As a welcome gift, enjoy <strong>10% off</strong> your first purchase with code WELCOME10.<br><br>
-              Browse our bestsellers → [Shop Now]<br><br>
-              Warm regards,<br>The Bloom Studio Team
-            </div>
-          </div>
-        </div>
-        <div class="work-info">
-          <div class="work-type" data-i18n="work4.type">Email Template</div>
-          <h3 data-i18n="work4.title">Welcome Email Sequence</h3>
-          <p data-i18n="work4.desc">On-brand welcome email with clear CTA for new newsletter subscribers.</p>
-        </div>
-      </article>
-
-      <article class="work-card" data-category="data" data-meta-en="Tools: Google Sheets · Excel&#10;Deliverable: Revenue tracking dashboard&#10;Includes: Client list, totals, status filters" data-meta-zh="工具：Google Sheets · Excel&#10;交付物：收入追踪仪表板&#10;包含：客户列表、总额、状态筛选">
-        <div class="work-preview">
-          <div class="mock-spreadsheet">
-            <table class="sheet-table">
-              <thead>
-                <tr><th>Client</th><th>Revenue</th><th>Status</th></tr>
-              </thead>
-              <tbody>
-                <tr><td>Acme Co.</td><td>$12,400</td><td>Active</td></tr>
-                <tr><td>Bloom Studio</td><td>$8,750</td><td>Active</td></tr>
-                <tr><td>TechStart</td><td>$5,200</td><td>Pending</td></tr>
-                <tr><td>GreenLeaf</td><td>$3,890</td><td>Active</td></tr>
-                <tr><td>Nova Brand</td><td>$2,100</td><td>Closed</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="work-info">
-          <div class="work-type" data-i18n="work5.type">Spreadsheet / Dashboard</div>
-          <h3 data-i18n="work5.title">Client Revenue Tracker</h3>
-          <p data-i18n="work5.desc">Clean Google Sheets dashboard tracking revenue, status, and monthly totals.</p>
-        </div>
-      </article>
-
-      <article class="work-card" data-category="design" data-meta-en="Tools: Canva&#10;Deliverable: Promotional banner graphic&#10;Use: Social media + email campaigns" data-meta-zh="工具：Canva&#10;交付物：促销横幅设计&#10;用途：社交媒体 + 邮件营销">
-        <div class="work-preview">
-          <div class="mock-design">
-            <h4>Summer Sale</h4>
-            <p>Up to 40% Off<br>June 1 – 15</p>
-            <div class="mock-design-btn">SHOP NOW</div>
-          </div>
-        </div>
-        <div class="work-info">
-          <div class="work-type" data-i18n="work6.type">Simple Design</div>
-          <h3 data-i18n="work6.title">Promotional Banner (Canva)</h3>
-          <p data-i18n="work6.desc">Eye-catching sale graphic for social media and email campaigns.</p>
-        </div>
-      </article>
-
-    </div>
-    <a href="#work" class="view-all" data-i18n="work.viewAll">View All</a>
   </div>
 </section>
 
@@ -2391,25 +1787,17 @@
   </div>
 </section>
 
-<footer>
-  <strong>Erika Joyce Bonje</strong>
-  <span>© <span id="footer-year">2026</span> <span data-i18n="footer.rights">Erika Joyce Bonje. All rights reserved.</span></span>
-</footer>
-
-<!-- Project modal -->
-<div class="project-modal" id="project-modal" aria-hidden="true" role="dialog" aria-labelledby="project-modal-title">
-  <div class="project-modal-backdrop" id="project-modal-backdrop"></div>
-  <div class="project-modal-dialog">
-    <button type="button" class="project-modal-close" id="project-modal-close" data-i18n-aria="modal.close" aria-label="Close project view">
-      <svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
-    </button>
-    <div class="project-modal-type" id="project-modal-type"></div>
-    <h3 class="project-modal-title" id="project-modal-title"></h3>
-    <div class="project-modal-preview" id="project-modal-preview"></div>
-    <p class="project-modal-desc" id="project-modal-desc"></p>
-    <div class="project-modal-meta" id="project-modal-meta"></div>
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-content">
+      <div class="site-footer-logo">
+        <a href="#home" class="site-footer-wordmark" aria-label="Erika Joyce Bonje">Erika</a>
+      </div>
+      <p class="site-footer-name">Erika Joyce Bonje</p>
+      <p class="site-footer-copy"><small data-i18n="footer.rights">&copy; Erika Joyce Bonje. All rights reserved.</small></p>
+    </div>
   </div>
-</div>
+</footer>
 
 <button class="scroll-top" id="scroll-top" type="button" data-i18n-aria="scroll.top" aria-label="Scroll to top">
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
@@ -2464,7 +1852,7 @@
       'nav.contact': 'Contact',
       'hero.experience': 'Experience',
       'hero.awards': '5+ Years Remote VA · 40+ Clients Served · QuickBooks Certified',
-      'hero.title': 'Your reliable partner behind the scenes.',
+      'hero.title': 'Great things are built in quiet moments that seem too small to matter',
       'hero.text': 'Erika Joyce Bonje is a detail-oriented Virtual Assistant and Bookkeeper who helps entrepreneurs and small business owners stay organized, productive, and focused on growth — handling admin, content, and operations with precision and care.',
       'hero.stat.years': 'Years',
       'hero.stat.clients': 'Clients',
@@ -2557,7 +1945,7 @@
       'contact.form.message': 'How can I help?',
       'contact.form.messagePh': 'Tell me about your business and what support you need...',
       'contact.form.send': 'Send Message',
-      'footer.rights': 'Erika Joyce Bonje. All rights reserved.',
+      'footer.rights': '© Erika Joyce Bonje. All rights reserved.',
       'modal.details': 'Project Details',
       'modal.close': 'Close project view',
       'scroll.top': 'Scroll to top',
@@ -2573,7 +1961,7 @@
       'nav.contact': '联系',
       'hero.experience': '经验',
       'hero.awards': '5年以上远程VA经验 · 服务40+客户 · QuickBooks认证',
-      'hero.title': '您身后可靠的合作伙伴。',
+      'hero.title': '伟大的成就，诞生于那些看似微不足道的安静时刻',
       'hero.text': 'Erika Joyce Bonje 是一位注重细节的虚拟助理兼簿记员，帮助创业者和小企业主保持条理、提高效率、专注于业务增长——以精准与用心处理行政、内容与运营事务。',
       'hero.stat.years': '年',
       'hero.stat.clients': '客户',
@@ -2666,7 +2054,7 @@
       'contact.form.message': '我能如何帮助您？',
       'contact.form.messagePh': '请介绍您的业务以及您需要的支持...',
       'contact.form.send': '发送消息',
-      'footer.rights': 'Erika Joyce Bonje 版权所有。',
+      'footer.rights': '© Erika Joyce Bonje 版权所有。',
       'modal.details': '项目详情',
       'modal.close': '关闭项目视图',
       'scroll.top': '回到顶部',
@@ -2674,20 +2062,6 @@
       'lang.switchToEn': '切换到英文'
     }
   };
-
-  function getCardMeta(card) {
-    if (currentLang === 'zh' && card.dataset.metaZh) return card.dataset.metaZh;
-    return card.dataset.metaEn || '';
-  }
-
-  function updateViewButtons() {
-    const t = i18n[currentLang];
-    document.querySelectorAll('.work-view-btn').forEach(btn => {
-      const span = btn.querySelector('span');
-      if (span) span.textContent = t['work.view'];
-      btn.setAttribute('aria-label', t['work.viewAria']);
-    });
-  }
 
   function setLang(lang) {
     currentLang = lang;
@@ -2719,7 +2093,6 @@
     langToggle.textContent = lang === 'en' ? '中文' : 'EN';
     langToggle.setAttribute('aria-label', lang === 'en' ? t['lang.switchToZh'] : t['lang.switchToEn']);
 
-    updateViewButtons();
     startHeroTypewriter(lang);
   }
 
@@ -2804,19 +2177,6 @@
     }, 4200);
   }, { once: true });
 
-  /* Work filter */
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const filter = btn.dataset.filter;
-      document.querySelectorAll('.work-card').forEach(card => {
-        const cat = card.dataset.category;
-        card.style.display = (filter === 'all' || cat === filter) ? '' : 'none';
-      });
-    });
-  });
-
   /* Nav toggle */
   const navToggle = document.getElementById('nav-toggle');
   const navMenu = document.getElementById('nav-menu');
@@ -2863,7 +2223,7 @@
 
   /* Theme toggle */
   const themeKey = 'portfolio-theme';
-  const themes = ['dark', 'cream', 'gold', 'gold-light'];
+  const themes = ['dark', 'cream', 'gold'];
   const themeBtns = document.querySelectorAll('.theme-btn');
 
   function setTheme(theme) {
@@ -2883,9 +2243,6 @@
     btn.addEventListener('click', () => setTheme(btn.dataset.theme));
   });
 
-  /* Footer year */
-  document.getElementById('footer-year').textContent = new Date().getFullYear();
-
   /* Scroll to top */
   const scrollTopBtn = document.getElementById('scroll-top');
 
@@ -2895,69 +2252,6 @@
 
   scrollTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  });
-
-  /* Project modal */
-  const projectModal = document.getElementById('project-modal');
-  const modalBackdrop = document.getElementById('project-modal-backdrop');
-  const modalClose = document.getElementById('project-modal-close');
-  const modalType = document.getElementById('project-modal-type');
-  const modalTitle = document.getElementById('project-modal-title');
-  const modalPreview = document.getElementById('project-modal-preview');
-  const modalDesc = document.getElementById('project-modal-desc');
-  const modalMeta = document.getElementById('project-modal-meta');
-
-  function openProjectModal(card) {
-    const type = card.querySelector('.work-type').textContent;
-    const title = card.querySelector('.work-info h3').textContent;
-    const desc = card.querySelector('.work-info p').textContent;
-    const meta = getCardMeta(card);
-    const preview = card.querySelector('.work-preview').cloneNode(true);
-    const viewBtn = preview.querySelector('.work-view-btn');
-    if (viewBtn) viewBtn.remove();
-
-    modalType.textContent = type;
-    modalTitle.textContent = title;
-    modalDesc.textContent = desc;
-    modalPreview.innerHTML = '';
-    modalPreview.appendChild(preview);
-    modalMeta.innerHTML = meta
-      ? '<strong>' + i18n[currentLang]['modal.details'] + '</strong>' + meta.split('\n').join('<br>')
-      : '';
-
-    projectModal.classList.add('open');
-    projectModal.setAttribute('aria-hidden', 'false');
-    document.body.classList.add('modal-open');
-  }
-
-  function closeProjectModal() {
-    projectModal.classList.remove('open');
-    projectModal.setAttribute('aria-hidden', 'true');
-    document.body.classList.remove('modal-open');
-    modalPreview.innerHTML = '';
-  }
-
-  document.querySelectorAll('.work-card').forEach(card => {
-    const preview = card.querySelector('.work-preview');
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'work-view-btn';
-    btn.setAttribute('aria-label', i18n[currentLang]['work.viewAria']);
-    btn.innerHTML = '<span>' + i18n[currentLang]['work.view'] + '</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openProjectModal(card);
-    });
-    preview.appendChild(btn);
-  });
-
-  modalClose.addEventListener('click', closeProjectModal);
-  modalBackdrop.addEventListener('click', closeProjectModal);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && projectModal.classList.contains('open')) {
-      closeProjectModal();
-    }
   });
 </script>
 
@@ -2970,7 +2264,7 @@
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const heroSelectors = [
       '.hero-awards', '.statement-title', '.hero-typewriter', '.statement-divider', '.statement-text',
-      '.hero-stats > div', '.hero-profile-label', '.hero-photo', '.hero-identity', '.hero-downloads a'
+      '.hero-stats > div', '.hero-identity', '.hero-downloads a'
     ];
 
     function showHeroInstant() {
@@ -2986,20 +2280,18 @@
       gsap.set('.hero-inner', { visibility: 'visible', opacity: 1 });
 
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      tl.fromTo('.hero-awards', { y: 36, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.75 })
-        .fromTo('.statement-title', { y: 44, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85 }, '-=0.45')
+      tl.fromTo('.statement-title', { y: 44, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85 })
+        .fromTo('.hero-identity', { y: 28, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7 }, '-=0.45')
         .fromTo('.hero-typewriter', { y: 28, autoAlpha: 0 }, {
           y: 0,
           autoAlpha: 1,
           duration: 0.7,
           onComplete: () => window.startHeroTypewriter?.()
         }, '-=0.4')
+        .fromTo('.hero-awards', { y: 36, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.75 }, '-=0.35')
         .fromTo('.statement-divider', { scaleY: 0, autoAlpha: 0 }, { scaleY: 1, autoAlpha: 1, duration: 0.5 }, '-=0.45')
         .fromTo('.statement-text', { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.75 }, '-=0.35')
         .fromTo('.hero-stats > div', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.12 }, '-=0.4')
-        .fromTo('.hero-profile-label', { y: 20, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.55 }, '-=0.55')
-        .fromTo('.hero-photo', { y: 40, autoAlpha: 0, scale: 0.96 }, { y: 0, autoAlpha: 1, scale: 1, duration: 1 }, '-=0.5')
-        .fromTo('.hero-identity', { y: 28, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7 }, '-=0.65')
         .fromTo('.hero-downloads a', { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.5, stagger: 0.1 }, '-=0.45');
     }
 
@@ -3009,12 +2301,6 @@
     }
 
     function scheduleHero() {
-      const heroPhoto = document.querySelector('.hero-photo');
-      if (heroPhoto && !heroPhoto.complete) {
-        heroPhoto.addEventListener('load', startHero, { once: true });
-        heroPhoto.addEventListener('error', startHero, { once: true });
-        return;
-      }
       startHero();
     }
 
@@ -3055,35 +2341,9 @@
 
     reveal('.section-heading', { y: 56, duration: 1 });
 
-    gsap.from('.about-photo-wrap', {
-      x: -40, opacity: 0, duration: 1, ease: 'power3.out',
-      scrollTrigger: { trigger: '.about-grid', start: 'top 82%' }
-    });
-    gsap.from('.about-content > *', {
-      y: 32, opacity: 0, duration: 0.75, stagger: 0.1, ease: 'power3.out',
-      scrollTrigger: { trigger: '.about-content', start: 'top 85%' }
-    });
-    gsap.from('.client-list li', {
-      x: -24, opacity: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-      scrollTrigger: { trigger: '.client-list', start: 'top 88%' }
-    });
-
     gsap.from('.skill-category', {
       y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out',
       scrollTrigger: { trigger: '.skills-layout', start: 'top 85%' }
-    });
-
-    gsap.from('.filter-btn', {
-      y: 16, opacity: 0, duration: 0.55, stagger: 0.06, ease: 'power2.out',
-      scrollTrigger: { trigger: '.work-filters', start: 'top 90%' }
-    });
-    gsap.from('.work-card', {
-      y: 50, opacity: 0, duration: 0.85, stagger: 0.1, ease: 'power3.out',
-      scrollTrigger: { trigger: '.work-grid', start: 'top 88%' }
-    });
-    gsap.from('.view-all', {
-      y: 20, opacity: 0, duration: 0.6, ease: 'power2.out',
-      scrollTrigger: { trigger: '.view-all', start: 'top 95%' }
     });
 
     gsap.from('.cert-card', {
@@ -3104,19 +2364,6 @@
       scrollTrigger: { trigger: '.contact-form-wrap', start: 'top 88%' }
     });
 
-    document.querySelectorAll('.work-card').forEach(card => {
-      const preview = card.querySelector('.work-preview');
-      const info = card.querySelector('.work-info');
-      card.addEventListener('mouseenter', () => {
-        gsap.to(preview, { y: -6, scale: 1.03, duration: 0.4, ease: 'power2.out' });
-        gsap.to(info, { y: -2, duration: 0.35, ease: 'power2.out' });
-      });
-      card.addEventListener('mouseleave', () => {
-        gsap.to(preview, { y: 0, scale: 1, duration: 0.45, ease: 'power2.out' });
-        gsap.to(info, { y: 0, duration: 0.4, ease: 'power2.out' });
-      });
-    });
-
     document.querySelectorAll('.skill-category').forEach(card => {
       const icon = card.querySelector('.skill-category-icon');
       card.addEventListener('mouseenter', () => {
@@ -3134,11 +2381,6 @@
       card.addEventListener('mouseleave', () => gsap.to(card, { y: 0, scale: 1, duration: 0.4, ease: 'power2.out' }));
     });
 
-    document.querySelectorAll('.tag').forEach(tag => {
-      tag.addEventListener('mouseenter', () => gsap.to(tag, { scale: 1.06, y: -2, duration: 0.25, ease: 'back.out(2)' }));
-      tag.addEventListener('mouseleave', () => gsap.to(tag, { scale: 1, y: 0, duration: 0.3, ease: 'power2.out' }));
-    });
-
     document.querySelectorAll('.tool-pill').forEach(pill => {
       pill.addEventListener('mouseenter', () => gsap.to(pill, { scale: 1.08, y: -3, duration: 0.25, ease: 'back.out(2)' }));
       pill.addEventListener('mouseleave', () => gsap.to(pill, { scale: 1, y: 0, duration: 0.3, ease: 'power2.out' }));
@@ -3149,29 +2391,9 @@
       item.addEventListener('mouseleave', () => gsap.to(item, { x: 0, duration: 0.35, ease: 'power2.out' }));
     });
 
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('mouseenter', () => gsap.to(btn, { y: -3, duration: 0.25, ease: 'power2.out' }));
-      btn.addEventListener('mouseleave', () => {
-        if (!btn.classList.contains('active')) gsap.to(btn, { y: 0, duration: 0.25, ease: 'power2.out' });
-      });
-      btn.addEventListener('click', () => ScrollTrigger.refresh());
-    });
-
-    document.querySelectorAll('.btn, .view-all, .hero-downloads a').forEach(link => {
+    document.querySelectorAll('.btn, .hero-downloads a').forEach(link => {
       link.addEventListener('mouseenter', () => gsap.to(link, { y: -2, duration: 0.25, ease: 'power2.out' }));
       link.addEventListener('mouseleave', () => gsap.to(link, { y: 0, duration: 0.25, ease: 'power2.out' }));
-    });
-
-    document.querySelectorAll('.client-list li').forEach(li => {
-      const icon = li.querySelector('.client-icon');
-      li.addEventListener('mouseenter', () => {
-        gsap.to(li, { x: 6, duration: 0.3, ease: 'power2.out' });
-        if (icon) gsap.to(icon, { scale: 1.15, duration: 0.3, ease: 'power2.out' });
-      });
-      li.addEventListener('mouseleave', () => {
-        gsap.to(li, { x: 0, duration: 0.35, ease: 'power2.out' });
-        if (icon) gsap.to(icon, { scale: 1, duration: 0.35, ease: 'power2.out' });
-      });
     });
 
     ScrollTrigger.refresh();
