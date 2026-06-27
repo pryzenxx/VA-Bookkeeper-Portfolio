@@ -12,10 +12,16 @@
   if (theme && ['dark', 'cream', 'gold'].indexOf(theme) !== -1) {
     document.documentElement.setAttribute('data-theme', theme);
   }
+  var splashGif = 'assets/splash/splash-' + (theme === 'dark' || theme === 'gold' ? theme : 'cream') + '.gif';
+  var preload = document.createElement('link');
+  preload.rel = 'preload';
+  preload.as = 'image';
+  preload.href = splashGif;
+  document.head.appendChild(preload);
 })();
 </script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Erika Joyce Bonje — Virtual Assistant Portfolio</title>
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="apple-touch-icon" href="assets/favicon.svg">
@@ -113,99 +119,59 @@
 
   html.splash-pending body { overflow: hidden; }
 
+  .splash {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    overflow: hidden;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding:
+      env(safe-area-inset-top, 0)
+      env(safe-area-inset-right, 0)
+      env(safe-area-inset-bottom, 0)
+      env(safe-area-inset-left, 0);
+    box-sizing: border-box;
+    touch-action: none;
+  }
+
+  [data-theme="cream"] .splash,
+  .splash.is-cream { background: #f7f7f7; }
+
+  [data-theme="gold"] .splash,
+  .splash.is-gold { background: #c09345; }
+
+  [data-theme="dark"] .splash,
+  .splash.is-dark { background: #1c1c1e; }
+
+  .splash.done {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+  }
+
+  .splash-gif {
+    display: block;
+    width: 250px;
+    height: 250px;
+    max-width: min(250px, calc(100vw - 48px));
+    max-height: min(250px, calc(100dvh - 48px));
+    object-fit: contain;
+    object-position: center;
+  }
+
   html.hero-anim-pending .hero-inner {
     visibility: hidden;
   }
 
   html.hero-anim-pending .hero-photo {
     opacity: 0;
-  }
-
-  .splash {
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--bg);
-    color: var(--ink);
-    transition: opacity 0.75s ease, visibility 0.75s ease, background 0.35s ease;
-  }
-
-  .splash.done {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-  }
-
-  .splash-inner {
-    text-align: center;
-    padding: 24px;
-    transform: translateY(8px);
-    opacity: 0;
-    animation: splash-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
-  }
-
-  .splash-name {
-    font-family: 'Bastliga One', cursive;
-    font-size: clamp(4.5rem, 22vw, 10rem);
-    font-weight: 400;
-    color: var(--ink);
-    line-height: 0.95;
-    letter-spacing: 0.02em;
-    clip-path: inset(0 100% 0 0);
-    animation: splash-write 1.35s cubic-bezier(0.65, 0, 0.35, 1) 0.45s forwards;
-  }
-
-  .splash-line {
-    display: block;
-    width: 0;
-    height: 1px;
-    margin: 18px auto 0;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    animation: splash-line 0.85s ease 1.55s forwards;
-  }
-
-  [data-theme="gold"] .splash-line {
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
-  }
-
-  [data-theme="dark"] .splash-line {
-    background: linear-gradient(90deg, transparent, var(--color-gold-light), transparent);
-  }
-
-  @keyframes splash-rise {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes splash-write {
-    to { clip-path: inset(0 0 0 0); }
-  }
-
-  @keyframes splash-line {
-    to { width: min(220px, 60vw); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .splash-inner {
-      transform: none;
-      opacity: 1;
-      animation: none;
-    }
-
-    .splash-name {
-      clip-path: none;
-      animation: none;
-    }
-
-    .splash-line {
-      width: min(220px, 60vw);
-      animation: none;
-    }
   }
 
   body {
@@ -309,17 +275,17 @@
     display: flex;
     align-items: center;
     gap: 6px;
-    padding: 4px;
+    padding: 4px 6px;
     background: var(--bg-elevated);
     border: 1px solid var(--border);
-    border-radius: 0;
+    border-radius: 999px;
     transition: background 0.35s ease, border-color 0.35s ease;
   }
 
   .theme-btn {
     width: 18px;
     height: 18px;
-    border-radius: 0;
+    border-radius: 50%;
     border: 2px solid transparent;
     cursor: pointer;
     padding: 0;
@@ -347,8 +313,8 @@
     color: var(--ink);
     background: var(--bg-elevated);
     border: 1px solid var(--border);
-    border-radius: 0;
-    padding: 6px 12px;
+    border-radius: 999px;
+    padding: 6px 14px;
     cursor: pointer;
     transition: color 0.2s, border-color 0.2s, background 0.35s ease;
     flex-shrink: 0;
@@ -376,7 +342,7 @@
     align-items: center;
   }
 
-  .nav-menu a {
+  .nav-menu > li > a {
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.14em;
@@ -387,7 +353,7 @@
     position: relative;
   }
 
-  .nav-menu a::after {
+  .nav-menu > li > a::after {
     content: '';
     position: absolute;
     bottom: -4px; left: 0;
@@ -396,11 +362,21 @@
     transition: width 0.25s;
   }
 
-  .nav-menu a:hover,
-  .nav-menu a.active { color: var(--ink); }
+  .nav-menu > li > a:hover,
+  .nav-menu > li > a.active { color: var(--ink); }
 
-  .nav-menu a:hover::after,
-  .nav-menu a.active::after { width: 100%; }
+  .nav-menu > li > a:hover::after,
+  .nav-menu > li > a.active::after { width: 100%; }
+
+  .nav-menu-socials .nav-mobile-social-link {
+    position: static;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  .nav-menu-socials .nav-mobile-social-link::after {
+    display: none;
+  }
 
   .nav-socials {
     display: flex;
@@ -489,12 +465,26 @@
 
   /* ── HERO / PROFILE ── */
   .hero {
+    position: relative;
     min-height: 100vh;
     padding: 160px clamp(24px, 5%, 56px) 80px;
     background: var(--bg);
     display: flex;
     align-items: center;
+    justify-content: center;
+    overflow: hidden;
     transition: background 0.35s ease;
+  }
+
+  .hero-vanta {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero-vanta canvas {
+    pointer-events: auto;
   }
 
   .hero-inner {
@@ -508,6 +498,15 @@
     gap: clamp(40px, 6vw, 64px);
   }
 
+  .hero-inner.hero-quotes {
+    position: relative;
+    z-index: 1;
+    max-width: min(960px, 92vw);
+    min-height: calc(100vh - 160px);
+    justify-content: center;
+    gap: clamp(32px, 5vw, 56px);
+  }
+
   .hero-intro,
   .hero-details {
     display: flex;
@@ -516,9 +515,42 @@
     width: 100%;
   }
 
+  .hero-intro {
+    perspective: 900px;
+  }
+
   .hero-details {
     max-width: 560px;
     gap: 32px;
+  }
+
+  .hero-profile {
+    padding: 100px clamp(24px, 5%, 56px);
+    background: var(--bg);
+    transition: background 0.35s ease;
+  }
+
+  .hero-profile-inner {
+    max-width: 760px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 32px;
+  }
+
+  .hero-profile .hero-identity h1 {
+    margin-bottom: 0;
+  }
+
+  .hero-im {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    color: var(--ink-muted);
+    margin-bottom: 10px;
   }
 
   .hero-profile-label {
@@ -604,27 +636,47 @@
 
   .statement-title {
     font-family: var(--serif);
-    font-size: clamp(26px, 4vw, 44px);
+    font-size: clamp(32px, 5.5vw, 56px);
     font-weight: 300;
     font-style: italic;
-    line-height: 1.35;
+    line-height: 1.28;
     color: var(--ink);
-    margin-bottom: 28px;
-    max-width: 680px;
+    margin-bottom: 0;
+    max-width: 100%;
+    width: 100%;
   }
 
-  .hero-intro .hero-identity {
-    margin-bottom: 16px;
+  .statement-title .quote-word {
+    display: inline-block;
+    will-change: transform, opacity;
+  }
+
+  .quote-accent {
+    display: block;
+    width: min(140px, 22vw);
+    height: 1px;
+    margin: clamp(24px, 4vw, 36px) auto 0;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform-origin: center center;
+  }
+
+  [data-theme="gold"] .quote-accent {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.85), transparent);
+  }
+
+  [data-theme="dark"] .quote-accent {
+    background: linear-gradient(90deg, transparent, var(--color-gold-light), transparent);
   }
 
   .hero-typewriter {
     font-family: var(--serif);
-    font-size: clamp(20px, 2.8vw, 30px);
+    font-size: clamp(22px, 3.2vw, 36px);
     font-weight: 400;
     font-style: italic;
     line-height: 1.4;
     min-height: 1.5em;
     margin-bottom: 0;
+    width: 100%;
   }
 
   .hero-typewriter-text {
@@ -900,7 +952,6 @@
   .skill-category:hover { background: var(--bg-elevated); }
 
   .skill-category,
-  .cert-card,
   .contact-item,
   .tag {
     will-change: transform;
@@ -908,7 +959,6 @@
 
   @media (prefers-reduced-motion: reduce) {
     .skill-category,
-    .cert-card,
     .contact-item,
     .tag {
       will-change: auto;
@@ -947,135 +997,6 @@
   }
 
   .tool-pill:hover { color: var(--gold); }
-
-  /* ── CERTIFICATES ── */
-  #certificates { background: var(--bg); }
-
-  .cert-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0;
-    border-top: 1px solid var(--border);
-  }
-
-  .cert-card {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    border-bottom: 1px solid var(--border);
-    border-right: 1px solid var(--border);
-    transition: background 0.2s;
-  }
-
-  .cert-card:nth-child(2n) { border-right: none; }
-  .cert-card:hover { background: var(--bg-elevated); }
-
-  .cert-info {
-    padding: 36px 32px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .cert-year {
-    font-size: 10px;
-    font-weight: 500;
-    color: var(--ink-muted);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-
-  .cert-info h3 {
-    font-family: var(--serif);
-    font-size: 18px;
-    font-weight: 400;
-    font-style: italic;
-    color: var(--ink);
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-
-  .cert-provider {
-    font-size: 13px;
-    color: var(--ink-muted);
-    margin-bottom: 16px;
-  }
-
-  .cert-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 10px;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-  }
-
-  .cert-badge svg {
-    width: 12px; height: 12px;
-    stroke: var(--gold);
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .cert-screenshot {
-    background: var(--bg-alt);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 32px;
-    border-left: 1px solid var(--border);
-    min-height: 200px;
-  }
-
-  .cert-mock {
-    width: 100%;
-    max-width: 200px;
-    background: var(--bg-elevated);
-    border: 1px solid var(--border);
-    padding: 24px 16px;
-    text-align: center;
-    position: relative;
-  }
-
-  .cert-mock-logo {
-    font-size: 9px;
-    font-weight: 500;
-    color: var(--ink-muted);
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-
-  .cert-mock-title {
-    font-family: var(--serif);
-    font-size: 12px;
-    font-style: italic;
-    color: var(--ink);
-    margin-bottom: 8px;
-    line-height: 1.4;
-  }
-
-  .cert-mock-name { font-size: 9px; color: var(--ink-muted); margin-bottom: 4px; }
-  .cert-mock-date { font-size: 8px; color: var(--ink-muted); }
-
-  .cert-mock-seal {
-    width: 28px; height: 28px;
-    margin: 12px auto 0;
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  .cert-mock-seal svg {
-    width: 14px; height: 14px;
-    stroke: var(--gold);
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
 
   /* ── CONTACT ── */
   #contact { background: var(--bg); }
@@ -1353,16 +1274,39 @@
     .skills-layout { grid-template-columns: repeat(2, 1fr); }
     .skill-category:nth-child(3n) { border-right: 1px solid var(--border); }
     .skill-category:nth-child(2n) { border-right: none; }
-    .cert-grid { grid-template-columns: 1fr; }
-    .cert-card { border-right: none; }
     .about-grid { grid-template-columns: 1fr; }
     .about-photo-wrap { position: relative; top: 0; max-width: 280px; }
     .contact-layout { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 768px) {
+    .header-actions { gap: 12px; }
+
+    .theme-toggle {
+      gap: 4px;
+      padding: 2px 4px;
+    }
+
+    .theme-btn {
+      width: 12px;
+      height: 12px;
+      border-width: 1.5px;
+    }
+
     .nav-socials, .header-subscribe { display: none; }
     .nav-toggle { display: flex; }
+
+    .header-inner { max-width: none; }
+
+    .nav-bar {
+      position: relative;
+      flex-wrap: wrap;
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      padding-left: clamp(24px, 5%, 56px);
+      padding-right: clamp(24px, 5%, 56px);
+      box-sizing: border-box;
+    }
 
     .nav-menu {
       display: flex;
@@ -1371,23 +1315,25 @@
       top: 100%;
       left: 0;
       right: 0;
+      width: 100%;
       background: var(--bg);
       border-bottom: 1px solid transparent;
       padding: 0 clamp(24px, 5%, 56px);
-      gap: 16px;
-      align-items: flex-start;
+      gap: 0;
+      align-items: stretch;
       overflow: hidden;
       height: 0;
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
       transform-origin: top center;
+      box-sizing: border-box;
     }
 
     .nav-menu.is-open {
       visibility: visible;
       pointer-events: auto;
-      padding-top: 16px;
+      padding-top: 8px;
       padding-bottom: 24px;
       border-bottom-color: var(--border);
     }
@@ -1397,13 +1343,28 @@
       opacity: 1;
       visibility: visible;
       pointer-events: auto;
-      padding-top: 16px;
+      padding-top: 8px;
       padding-bottom: 24px;
       border-bottom-color: var(--border);
     }
 
     .nav-menu li {
       width: 100%;
+    }
+
+    .nav-menu > li > a {
+      display: block;
+      width: 100%;
+      padding: 14px 0;
+    }
+
+    .nav-menu-socials .nav-mobile-social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      padding: 0;
     }
 
     .nav-menu-mobile { display: list-item; }
@@ -1441,23 +1402,58 @@
       height: 18px;
     }
 
-    .nav-bar { position: relative; flex-wrap: wrap; }
-
     .skills-layout { grid-template-columns: 1fr; }
     .skill-category { border-right: none !important; padding-right: 0 !important; }
-    .cert-card { grid-template-columns: 1fr; }
-    .cert-screenshot { border-left: none; border-top: 1px solid var(--border); }
     .hero-stats { flex-wrap: wrap; gap: 24px; }
+  }
+
+  @media (min-width: 769px) {
+    .nav-bar {
+      position: static;
+      flex-wrap: nowrap;
+      width: auto;
+      margin-left: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .nav-menu {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      position: static;
+      height: auto !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto;
+      overflow: visible;
+      background: transparent;
+      border-bottom: none;
+      padding: 0;
+      gap: clamp(16px, 2.5vw, 36px);
+      align-items: center;
+    }
+
+    .nav-menu > li {
+      width: auto;
+    }
+
+    .nav-menu > li > a {
+      display: inline;
+      width: auto;
+      padding: 0;
+    }
+
+    .nav-menu-mobile,
+    .nav-menu-socials {
+      display: none !important;
+    }
   }
 </style>
 </head>
 <body>
 
 <div class="splash" id="splash" aria-hidden="false" role="presentation">
-  <div class="splash-inner">
-    <p class="splash-name">Erika</p>
-    <span class="splash-line" aria-hidden="true"></span>
-  </div>
+  <img class="splash-gif" id="splash-gif" src="" alt="" aria-hidden="true">
 </div>
 
 <!-- NAV -->
@@ -1484,10 +1480,11 @@
     </div>
     <nav class="nav-bar">
       <ul class="nav-menu" id="nav-menu">
+        <li><a href="#home" class="active" data-i18n="nav.home">Home</a></li>
         <li><a href="biography.html" data-i18n="nav.biography">Biography</a></li>
-        <li><a href="#skills" data-i18n="nav.skills">Skills</a></li>
         <li><a href="portfolio.html" data-i18n="nav.portfolio">Portfolio</a></li>
-        <li><a href="#certificates" data-i18n="nav.certificates">Certificates</a></li>
+        <li><a href="journal.html" data-i18n="nav.journal">Journal</a></li>
+        <li><a href="certificates.html" data-i18n="nav.certificates">Certificates</a></li>
         <li class="nav-menu-mobile"><a href="#contact" data-i18n="nav.contact">Contact</a></li>
         <li class="nav-menu-socials">
           <a href="https://linkedin.com/in/erikabonje" class="nav-mobile-social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
@@ -1508,15 +1505,24 @@
 
 <!-- HERO -->
 <section class="hero" id="home">
-  <div class="hero-inner">
+  <div id="hero-vanta" class="hero-vanta" aria-hidden="true"></div>
+  <div class="hero-inner hero-quotes">
     <div class="hero-intro">
       <h2 class="statement-title" data-i18n="hero.title">Great things are built in quiet moments that seem too small to matter</h2>
-      <div class="hero-identity">
-        <h1>Erika Joyce<br>Bonje</h1>
-      </div>
+      <span class="quote-accent" aria-hidden="true"></span>
       <p class="hero-typewriter" aria-live="polite">
         <span class="hero-typewriter-text" id="hero-typewriter-text"></span><span class="hero-typewriter-cursor" aria-hidden="true">|</span>
       </p>
+    </div>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section class="hero-profile" id="profile">
+  <div class="hero-profile-inner">
+    <div class="hero-identity">
+      <p class="hero-im" data-i18n="hero.im">I'm</p>
+      <h1>Erika Joyce<br>Bonje</h1>
     </div>
     <div class="hero-details">
       <div class="hero-awards">
@@ -1604,18 +1610,6 @@
       </div>
 
       <div class="skill-category">
-        <div class="skill-category-icon"><svg class="icon" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div>
-        <h3 data-i18n="skills.social">Social Media</h3>
-        <div class="tool-list">
-          <span class="tool-pill">Meta Business Suite</span>
-          <span class="tool-pill">Buffer</span>
-          <span class="tool-pill">Later</span>
-          <span class="tool-pill">Hootsuite</span>
-          <span class="tool-pill">Pinterest</span>
-        </div>
-      </div>
-
-      <div class="skill-category">
         <div class="skill-category-icon"><svg class="icon" viewBox="0 0 24 24"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></div>
         <h3 data-i18n="skills.business">Business &amp; CRM</h3>
         <div class="tool-list">
@@ -1626,89 +1620,6 @@
           <span class="tool-pill">Wave</span>
         </div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- CERTIFICATES -->
-<section id="certificates">
-  <div class="section-inner">
-    <h2 class="section-heading" data-i18n="section.certificates">Certificates</h2>
-
-    <div class="cert-grid">
-
-      <div class="cert-card">
-        <div class="cert-info">
-          <div class="cert-year" data-i18n="cert1.year">Completed 2024</div>
-          <h3 data-i18n="cert1.title">QuickBooks Online ProAdvisor Certification</h3>
-          <div class="cert-provider">Intuit QuickBooks</div>
-          <span class="cert-badge"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="cert.badge">Verified Certificate</span></span>
-        </div>
-        <div class="cert-screenshot">
-          <div class="cert-mock">
-            <div class="cert-mock-logo">Intuit</div>
-            <div class="cert-mock-title">QuickBooks Online ProAdvisor</div>
-            <div class="cert-mock-name">Erika Joyce Bonje</div>
-            <div class="cert-mock-date">Issued: March 2024</div>
-            <div class="cert-mock-seal"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-info">
-          <div class="cert-year" data-i18n="cert2.year">Completed 2023</div>
-          <h3 data-i18n="cert2.title">Certified Virtual Assistant Program</h3>
-          <div class="cert-provider" data-i18n="cert2.provider">Filipino Virtual Assistance Academy</div>
-          <span class="cert-badge"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="cert.badge">Verified Certificate</span></span>
-        </div>
-        <div class="cert-screenshot">
-          <div class="cert-mock">
-            <div class="cert-mock-logo">FVAA</div>
-            <div class="cert-mock-title">Certified Virtual Assistant</div>
-            <div class="cert-mock-name">Erika Joyce Bonje</div>
-            <div class="cert-mock-date">Issued: August 2023</div>
-            <div class="cert-mock-seal"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-info">
-          <div class="cert-year" data-i18n="cert3.year">Completed 2023</div>
-          <h3 data-i18n="cert3.title">Google Workspace Administrator</h3>
-          <div class="cert-provider" data-i18n="cert3.provider">Google Cloud Skills Boost</div>
-          <span class="cert-badge"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="cert.badge">Verified Certificate</span></span>
-        </div>
-        <div class="cert-screenshot">
-          <div class="cert-mock">
-            <div class="cert-mock-logo">Google</div>
-            <div class="cert-mock-title">Workspace Administrator</div>
-            <div class="cert-mock-name">Erika Joyce Bonje</div>
-            <div class="cert-mock-date">Issued: November 2023</div>
-            <div class="cert-mock-seal"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="cert-card">
-        <div class="cert-info">
-          <div class="cert-year" data-i18n="cert4.year">Completed 2022</div>
-          <h3 data-i18n="cert4.title">Social Media Management &amp; Content Creation</h3>
-          <div class="cert-provider" data-i18n="cert4.provider">Coursera — Meta</div>
-          <span class="cert-badge"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg> <span data-i18n="cert.badge">Verified Certificate</span></span>
-        </div>
-        <div class="cert-screenshot">
-          <div class="cert-mock">
-            <div class="cert-mock-logo">Coursera</div>
-            <div class="cert-mock-title">Social Media Management</div>
-            <div class="cert-mock-name">Erika Joyce Bonje</div>
-            <div class="cert-mock-date">Issued: June 2022</div>
-            <div class="cert-mock-seal"><svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg></div>
-          </div>
-        </div>
-      </div>
-
     </div>
   </div>
 </section>
@@ -1818,23 +1729,36 @@
     });
   })();
 
-  /* Splash screen */
+  /* Splash screen — theme GIF files */
   (function () {
     const splash = document.getElementById('splash');
-    if (!splash) return;
+    const gif = document.getElementById('splash-gif');
+    if (!splash || !gif) return;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const theme = document.documentElement.getAttribute('data-theme') || 'cream';
+    const mode = ['dark', 'gold', 'cream'].includes(theme) ? theme : 'cream';
 
+    const gifSrc = 'assets/splash/splash-' + mode + '.gif';
+    const gifBg = { cream: '#f7f7f7', gold: '#c09345', dark: '#1c1c1e' };
+    const duration = { cream: 2800, gold: 4200, dark: 2800 };
+
+    splash.classList.add('is-' + mode);
+    splash.style.backgroundColor = gifBg[mode];
     document.documentElement.classList.add('splash-pending');
-    const holdMs = reducedMotion ? 600 : 2800;
+    gif.src = gifSrc + '?v=1';
 
-    window.setTimeout(() => {
-      splash.classList.add('done');
-      document.documentElement.classList.remove('splash-pending');
-      window.scrollTo(0, 0);
-      window.dispatchEvent(new CustomEvent('splashdone'));
-      window.setTimeout(() => splash.remove(), 750);
-    }, holdMs);
+    function finishSplash(delay) {
+      window.setTimeout(() => {
+        splash.classList.add('done');
+        document.documentElement.classList.remove('splash-pending');
+        window.scrollTo(0, 0);
+        window.dispatchEvent(new CustomEvent('splashdone'));
+        window.setTimeout(() => splash.remove(), 550);
+      }, delay);
+    }
+
+    finishSplash(reducedMotion ? 600 : duration[mode]);
   })();
 
   /* Language toggle */
@@ -1845,12 +1769,15 @@
   const i18n = {
     en: {
       pageTitle: 'Erika Joyce Bonje — Virtual Assistant Portfolio',
+      'nav.home': 'Home',
       'nav.biography': 'Biography',
       'nav.skills': 'Skills',
       'nav.portfolio': 'Portfolio',
       'nav.certificates': 'Certificates',
+      'nav.journal': 'Journal',
       'nav.contact': 'Contact',
       'hero.experience': 'Experience',
+      'hero.im': "I'm",
       'hero.awards': '5+ Years Remote VA · 40+ Clients Served · QuickBooks Certified',
       'hero.title': 'Great things are built in quiet moments that seem too small to matter',
       'hero.text': 'Erika Joyce Bonje is a detail-oriented Virtual Assistant and Bookkeeper who helps entrepreneurs and small business owners stay organized, productive, and focused on growth — handling admin, content, and operations with precision and care.',
@@ -1954,12 +1881,15 @@
     },
     zh: {
       pageTitle: 'Erika Joyce Bonje — 虚拟助理作品集',
+      'nav.home': '首页',
       'nav.biography': '个人简介',
       'nav.skills': '技能工具',
       'nav.portfolio': '作品集',
       'nav.certificates': '证书培训',
+      'nav.journal': '日志',
       'nav.contact': '联系',
       'hero.experience': '经验',
+      'hero.im': '我是',
       'hero.awards': '5年以上远程VA经验 · 服务40+客户 · QuickBooks认证',
       'hero.title': '伟大的成就，诞生于那些看似微不足道的安静时刻',
       'hero.text': 'Erika Joyce Bonje 是一位注重细节的虚拟助理兼簿记员，帮助创业者和小企业主保持条理、提高效率、专注于业务增长——以精准与用心处理行政、内容与运营事务。',
@@ -2093,6 +2023,11 @@
     langToggle.textContent = lang === 'en' ? '中文' : 'EN';
     langToggle.setAttribute('aria-label', lang === 'en' ? t['lang.switchToZh'] : t['lang.switchToEn']);
 
+    wrapQuoteWords(document.querySelector('.statement-title'));
+    if (typeof gsap !== 'undefined' && !document.documentElement.classList.contains('splash-pending')) {
+      animateQuoteWords();
+    }
+
     startHeroTypewriter(lang);
   }
 
@@ -2101,6 +2036,62 @@
   });
 
   const savedLang = localStorage.getItem(langKey);
+
+  /* Quote word animation */
+  function wrapQuoteWords(el) {
+    if (!el) return;
+    const text = el.textContent.trim();
+    if (!text) return;
+    el.textContent = '';
+    text.split(/(\s+)/).forEach(part => {
+      if (/^\s+$/.test(part)) {
+        el.appendChild(document.createTextNode(part));
+      } else {
+        const span = document.createElement('span');
+        span.className = 'quote-word';
+        span.textContent = part;
+        el.appendChild(span);
+      }
+    });
+  }
+
+  function animateQuoteWords(opts) {
+    opts = opts || {};
+    const words = document.querySelectorAll('.statement-title .quote-word');
+    const accent = document.querySelector('.quote-accent');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (!words.length) {
+      opts.onComplete?.();
+      return;
+    }
+
+    if (opts.instant || reducedMotion || typeof gsap === 'undefined') {
+      words.forEach(w => { w.style.opacity = '1'; w.style.transform = 'none'; });
+      if (accent) { accent.style.opacity = '1'; accent.style.transform = 'scaleX(1)'; }
+      opts.onComplete?.();
+      return;
+    }
+
+    gsap.killTweensOf(words);
+    if (accent) gsap.killTweensOf(accent);
+
+    const tl = gsap.timeline({ onComplete: opts.onComplete });
+    tl.fromTo(words,
+      { opacity: 0, y: 32, rotateX: -42, transformOrigin: '50% 100%' },
+      { opacity: 1, y: 0, rotateX: 0, duration: 0.58, stagger: 0.05, ease: 'power3.out' }
+    );
+    if (accent) {
+      tl.fromTo(accent,
+        { scaleX: 0, opacity: 0, transformOrigin: 'center center' },
+        { scaleX: 1, opacity: 1, duration: 0.75, ease: 'power3.out' },
+        '-=0.45'
+      );
+    }
+  }
+
+  window.wrapQuoteWords = wrapQuoteWords;
+  window.animateQuoteWords = animateQuoteWords;
 
   /* Hero typewriter */
   let heroTypewriterCancel = null;
@@ -2232,6 +2223,7 @@
       btn.classList.toggle('active', btn.dataset.theme === theme);
     });
     localStorage.setItem(themeKey, theme);
+    window.updateVantaTheme?.(theme);
   }
 
   const savedTheme = localStorage.getItem(themeKey);
@@ -2262,37 +2254,38 @@
     if (typeof gsap === 'undefined') return;
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const heroSelectors = [
-      '.hero-awards', '.statement-title', '.hero-typewriter', '.statement-divider', '.statement-text',
-      '.hero-stats > div', '.hero-identity', '.hero-downloads a'
+    const profileSelectors = [
+      '.hero-identity', '.hero-awards', '.statement-text',
+      '.hero-stats > div', '.hero-downloads a'
     ];
 
     function showHeroInstant() {
       document.documentElement.classList.remove('hero-anim-pending');
       gsap.set('.hero-inner', { visibility: 'visible', opacity: 1 });
-      gsap.set(heroSelectors, { autoAlpha: 1, y: 0, scale: 1, scaleY: 1, clearProps: 'transform' });
+      window.wrapQuoteWords(document.querySelector('.statement-title'));
+      window.animateQuoteWords({ instant: true });
+      gsap.set('.hero-typewriter', { autoAlpha: 1, y: 0, clearProps: 'transform' });
+      gsap.set(profileSelectors, { autoAlpha: 1, y: 0, clearProps: 'transform' });
       window.startHeroTypewriter?.();
     }
 
     function animateHero() {
-      gsap.set(heroSelectors, { autoAlpha: 0 });
       document.documentElement.classList.remove('hero-anim-pending');
       gsap.set('.hero-inner', { visibility: 'visible', opacity: 1 });
+      gsap.set('.hero-typewriter', { autoAlpha: 0, y: 28 });
+      window.wrapQuoteWords(document.querySelector('.statement-title'));
 
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-      tl.fromTo('.statement-title', { y: 44, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.85 })
-        .fromTo('.hero-identity', { y: 28, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7 }, '-=0.45')
-        .fromTo('.hero-typewriter', { y: 28, autoAlpha: 0 }, {
-          y: 0,
-          autoAlpha: 1,
-          duration: 0.7,
-          onComplete: () => window.startHeroTypewriter?.()
-        }, '-=0.4')
-        .fromTo('.hero-awards', { y: 36, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.75 }, '-=0.35')
-        .fromTo('.statement-divider', { scaleY: 0, autoAlpha: 0 }, { scaleY: 1, autoAlpha: 1, duration: 0.5 }, '-=0.45')
-        .fromTo('.statement-text', { y: 30, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.75 }, '-=0.35')
-        .fromTo('.hero-stats > div', { y: 24, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, stagger: 0.12 }, '-=0.4')
-        .fromTo('.hero-downloads a', { y: 16, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.5, stagger: 0.1 }, '-=0.45');
+      window.animateQuoteWords({
+        onComplete: () => {
+          gsap.to('.hero-typewriter', {
+            y: 0,
+            autoAlpha: 1,
+            duration: 0.7,
+            ease: 'power3.out',
+            onComplete: () => window.startHeroTypewriter?.()
+          });
+        }
+      });
     }
 
     function startHero() {
@@ -2341,14 +2334,26 @@
 
     reveal('.section-heading', { y: 56, duration: 1 });
 
+    gsap.from('.hero-identity', {
+      y: 36, opacity: 0, duration: 0.85, ease: 'power3.out',
+      scrollTrigger: { trigger: '.hero-profile', start: 'top 85%' }
+    });
+    gsap.from('.hero-awards, .statement-text', {
+      y: 30, opacity: 0, duration: 0.75, stagger: 0.12, ease: 'power3.out',
+      scrollTrigger: { trigger: '.hero-profile', start: 'top 82%' }
+    });
+    gsap.from('.hero-stats > div', {
+      y: 24, opacity: 0, duration: 0.6, stagger: 0.12, ease: 'power3.out',
+      scrollTrigger: { trigger: '.hero-stats', start: 'top 88%' }
+    });
+    gsap.from('.hero-downloads a', {
+      y: 16, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out',
+      scrollTrigger: { trigger: '.hero-downloads', start: 'top 90%' }
+    });
+
     gsap.from('.skill-category', {
       y: 40, opacity: 0, duration: 0.8, stagger: 0.1, ease: 'power3.out',
       scrollTrigger: { trigger: '.skills-layout', start: 'top 85%' }
-    });
-
-    gsap.from('.cert-card', {
-      y: 44, opacity: 0, duration: 0.85, stagger: 0.12, ease: 'power3.out',
-      scrollTrigger: { trigger: '.cert-grid', start: 'top 85%' }
     });
 
     gsap.from('.contact-letter-title, .contact-letter-desc', {
@@ -2374,11 +2379,6 @@
         gsap.to(card, { y: 0, duration: 0.4, ease: 'power2.out' });
         if (icon) gsap.to(icon, { scale: 1, rotate: 0, duration: 0.4, ease: 'power2.out' });
       });
-    });
-
-    document.querySelectorAll('.cert-card').forEach(card => {
-      card.addEventListener('mouseenter', () => gsap.to(card, { y: -6, scale: 1.01, duration: 0.35, ease: 'power2.out' }));
-      card.addEventListener('mouseleave', () => gsap.to(card, { y: 0, scale: 1, duration: 0.4, ease: 'power2.out' }));
     });
 
     document.querySelectorAll('.tool-pill').forEach(pill => {
@@ -2517,9 +2517,23 @@
     };
 
     mq.addEventListener('change', () => {
-      if (!mq.matches && isOpen) {
-        if (hasGsap && !reducedMotion) closeNav();
-        else setNavInstant(false);
+      if (!mq.matches) {
+        navTl?.kill();
+        burgerTl?.kill();
+        isOpen = false;
+        navMenu.classList.remove('open', 'is-open', 'gsap-nav');
+        navToggle.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('nav-open');
+        if (hasGsap) {
+          gsap.set(navMenu, { clearProps: 'height,opacity,visibility' });
+          gsap.set(navMenu.querySelectorAll('li'), { clearProps: 'all' });
+        }
+        return;
+      }
+      if (hasGsap && !reducedMotion) {
+        navToggle.classList.add('gsap-burger');
+        if (!isOpen) gsap.set(navMenu, { height: 0, opacity: 0, visibility: 'hidden' });
       }
     });
 
@@ -2527,6 +2541,87 @@
       navToggle.classList.add('gsap-burger');
       gsap.set(navMenu, { height: 0, opacity: 0, visibility: 'hidden' });
     }
+  })();
+</script>
+
+<script src="assets/js/three.r134.min.js"></script>
+<script src="assets/js/vanta.birds.min.js"></script>
+<script>
+  (function initHeroVanta() {
+    const VANTA_THEMES = {
+      cream: {
+        backgroundColor: 0xf7f5f2,
+        color1: 0x5f5f5f,
+        color2: 0x757575
+      },
+      dark: {
+        backgroundColor: 0x1e1f23,
+        color1: 0xb89047,
+        color2: 0xd4ad6a
+      },
+      gold: {
+        backgroundColor: 0xb89047,
+        color1: 0xffffff,
+        color2: 0xffffff
+      }
+    };
+
+    let vantaEffect = null;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function getActiveTheme() {
+      return document.documentElement.getAttribute('data-theme') || 'cream';
+    }
+
+    function destroyVanta() {
+      if (vantaEffect) {
+        vantaEffect.destroy();
+        vantaEffect = null;
+      }
+    }
+
+    function initVanta(theme) {
+      if (reducedMotion || typeof VANTA === 'undefined') return;
+
+      const el = document.getElementById('hero-vanta');
+      if (!el) return;
+
+      const colors = VANTA_THEMES[theme] || VANTA_THEMES.cream;
+
+      destroyVanta();
+
+      vantaEffect = VANTA.BIRDS({
+        el: '#hero-vanta',
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00,
+        scale: 1.00,
+        scaleMobile: 1.00,
+        backgroundColor: colors.backgroundColor,
+        color1: colors.color1,
+        color2: colors.color2
+      });
+    }
+
+    window.updateVantaTheme = function (theme) {
+      initVanta(theme || getActiveTheme());
+    };
+
+    function boot() {
+      initVanta(getActiveTheme());
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', boot);
+    } else {
+      boot();
+    }
+
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted && !vantaEffect) boot();
+    });
   })();
 </script>
 

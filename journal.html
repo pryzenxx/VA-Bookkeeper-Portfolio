@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="cream">
+<head>
+<script>
+(function () {
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  window.scrollTo(0, 0);
+  var theme = localStorage.getItem('portfolio-theme');
+  if (theme && ['dark', 'cream', 'gold'].indexOf(theme) !== -1) {
+    document.documentElement.setAttribute('data-theme', theme);
+  }
+  var lang = localStorage.getItem('portfolio-lang');
+  if (lang === 'zh') document.documentElement.lang = 'zh-CN';
+})();
+</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erika Joyce Bonje — Journal</title>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="apple-touch-icon" href="assets/favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Sans:ital,wght@0,400;0,500;1,400&family=Noto+Sans+SC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --color-dark: #1E1F23;
+    --color-cream: #F7F5F2;
+    --color-gold: #B89047;
+    --serif: 'Cormorant Garamond', 'Times New Roman', Times, serif;
+    --sans: 'DM Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --bg: var(--color-cream);
+    --bg-alt: #ffffff;
+    --bg-elevated: rgba(255, 255, 255, 0.72);
+    --ink: var(--color-dark);
+    --ink-soft: #555555;
+    --ink-muted: #999999;
+    --border: rgba(30, 31, 35, 0.12);
+    --gold: #B89047;
+  }
+
+  [data-theme="dark"] {
+    --bg: var(--color-dark);
+    --bg-alt: #2a2b30;
+    --bg-elevated: rgba(42, 43, 48, 0.9);
+    --ink: var(--color-cream);
+    --ink-soft: rgba(247, 245, 242, 0.75);
+    --ink-muted: rgba(247, 245, 242, 0.45);
+    --border: rgba(232, 213, 166, 0.18);
+  }
+
+  [data-theme="gold"] {
+    --bg: var(--color-gold);
+    --bg-alt: #c9a55a;
+    --bg-elevated: rgba(255, 255, 255, 0.1);
+    --ink: #ffffff;
+    --ink-soft: rgba(255, 255, 255, 0.85);
+    --ink-muted: rgba(255, 255, 255, 0.65);
+    --border: rgba(255, 255, 255, 0.25);
+  }
+
+  html { scroll-behavior: smooth; scroll-padding-top: 88px; }
+
+  @font-face {
+    font-family: 'Bastliga One';
+    src: url('assets/fonts/Bastliga-One.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 2.28;
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+
+  html[lang="zh-CN"] body { font-family: 'Noto Sans SC', var(--sans), sans-serif; }
+  html[lang="zh-CN"] .section-heading,
+  html[lang="zh-CN"] .journal-title { font-family: 'Noto Sans SC', var(--serif), serif; }
+
+  a { color: inherit; }
+
+  .icon {
+    width: 20px; height: 20px;
+    stroke: var(--ink); fill: none;
+    stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+    flex-shrink: 0;
+  }
+
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s, background 0.35s ease, border-color 0.35s ease;
+  }
+  .site-header.scrolled { box-shadow: 0 1px 0 var(--border); }
+
+  .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 clamp(24px, 5%, 56px); }
+  .header-top { display: flex; align-items: center; justify-content: space-between; padding: 20px 0 0; }
+
+  .site-name {
+    font-family: 'Bastliga One', cursive;
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    color: var(--ink); text-decoration: none; line-height: 1;
+    transition: color 0.2s;
+  }
+  .site-name:hover { color: var(--gold); }
+
+  .header-actions { display: flex; align-items: center; gap: 20px; }
+
+  .header-subscribe {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink); text-decoration: none; border-bottom: 1px solid var(--ink); padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .header-subscribe:hover { color: var(--gold); border-color: var(--gold); }
+
+  .theme-toggle {
+    display: flex; align-items: center; gap: 6px; padding: 4px 6px;
+    background: var(--bg-elevated); border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+
+  .theme-btn {
+    width: 18px; height: 18px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; padding: 0;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+  .theme-btn:hover { transform: scale(1.12); }
+  .theme-btn.active { border-color: var(--ink); box-shadow: 0 0 0 1px var(--bg); }
+  .theme-btn[data-theme="dark"] { background: #1E1F23; }
+  .theme-btn[data-theme="cream"] { background: #F7F5F2; border-color: rgba(30,31,35,0.15); }
+  .theme-btn[data-theme="gold"] { background: #B89047; }
+
+  .lang-toggle {
+    font-family: var(--sans); font-size: 11px; font-weight: 500; letter-spacing: 0.08em;
+    color: var(--ink); background: var(--bg-elevated); border: 1px solid var(--border);
+    border-radius: 999px; padding: 6px 14px; cursor: pointer; line-height: 1;
+  }
+  .lang-toggle:hover { color: var(--gold); border-color: var(--gold); }
+
+  .nav-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0 18px; border-top: 1px solid var(--border); margin-top: 16px;
+  }
+
+  .nav-menu { display: flex; gap: clamp(20px, 3vw, 40px); list-style: none; align-items: center; }
+
+  .nav-menu > li > a {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink-muted); text-decoration: none; transition: color 0.2s; position: relative;
+  }
+  .nav-menu > li > a::after {
+    content: ''; position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px; background: var(--ink); transition: width 0.25s;
+  }
+  .nav-menu > li > a:hover, .nav-menu > li > a.active { color: var(--ink); }
+  .nav-menu > li > a:hover::after, .nav-menu > li > a.active::after { width: 100%; }
+
+  .nav-menu-socials .nav-mobile-social-link {
+    position: static;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  .nav-menu-socials .nav-mobile-social-link::after {
+    display: none;
+  }
+
+  .nav-socials { display: flex; gap: 16px; align-items: center; }
+  .nav-socials a {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-muted); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-socials a:hover { color: var(--ink); }
+
+  .nav-toggle {
+    display: none; background: none; border: none; cursor: pointer; padding: 4px;
+    color: var(--ink); align-items: center; justify-content: center; width: 30px; height: 30px;
+  }
+  .nav-toggle-icon { position: relative; display: inline-block; width: 22px; height: 16px; }
+  .nav-toggle-line {
+    position: absolute; left: 0; width: 100%; height: 1.5px; background: currentColor;
+    transition: transform 0.3s ease, opacity 0.2s ease, top 0.3s ease;
+  }
+  .nav-toggle-line:nth-child(1) { top: 0; }
+  .nav-toggle-line:nth-child(2) { top: 7px; }
+  .nav-toggle-line:nth-child(3) { top: 14px; }
+  .nav-toggle.open .nav-toggle-line:nth-child(1) { top: 7px; transform: rotate(45deg); }
+  .nav-toggle.open .nav-toggle-line:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-toggle.open .nav-toggle-line:nth-child(3) { top: 7px; transform: rotate(-45deg); }
+
+  .nav-menu-mobile { display: none; }
+  .nav-menu-socials { display: none; list-style: none; }
+  body.nav-open { overflow: hidden; }
+
+  .journal-page {
+    padding: 140px clamp(24px, 5%, 56px) 100px;
+    background: var(--bg);
+    min-height: 100vh;
+  }
+
+  .section-inner { max-width: 820px; margin: 0 auto; }
+
+  .journal-subheading {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 32px;
+    margin-top: 8px;
+  }
+
+  .journal-cert-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--border);
+    margin-bottom: 64px;
+  }
+
+  .journal-entry--cert {
+    display: grid;
+    grid-template-columns: minmax(160px, 220px) 1fr;
+    gap: clamp(24px, 4vw, 40px);
+    align-items: start;
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .journal-entry--cert:hover {
+    background: var(--bg-elevated);
+    padding-left: 16px;
+    padding-right: 16px;
+    margin-left: -16px;
+    margin-right: -16px;
+  }
+
+  .journal-cert-photo {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: var(--bg-alt);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    overflow: hidden;
+  }
+
+  .journal-cert-photo.has-photo {
+    padding: 0;
+  }
+
+  .journal-cert-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: none;
+  }
+
+  .journal-cert-photo.has-photo .journal-cert-img {
+    display: block;
+  }
+
+  .journal-cert-fallback {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .journal-cert-photo.has-photo .journal-cert-fallback {
+    display: none;
+  }
+
+  .journal-cert-view-btn {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    background: rgba(30, 31, 35, 0.5);
+    border: none;
+    opacity: 0;
+    visibility: hidden;
+    color: #ffffff;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: opacity 0.3s, visibility 0.3s, background 0.3s;
+  }
+
+  .journal-cert-view-btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: #ffffff;
+    fill: none;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: transform 0.25s ease;
+  }
+
+  .journal-cert-photo:hover .journal-cert-view-btn,
+  .journal-cert-view-btn:hover,
+  .journal-cert-view-btn:focus-visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .journal-cert-view-btn:hover {
+    background: rgba(30, 31, 35, 0.72);
+  }
+
+  .journal-cert-view-btn:hover svg {
+    transform: translateX(4px);
+  }
+
+  .cert-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+
+  .cert-lightbox.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .cert-lightbox-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(30, 31, 35, 0.55);
+    backdrop-filter: blur(4px);
+  }
+
+  .cert-lightbox-dialog {
+    position: relative;
+    width: 100%;
+    max-width: 880px;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    transform: translateY(20px) scale(0.98);
+    transition: transform 0.3s ease, background 0.35s ease;
+  }
+
+  .cert-lightbox.open .cert-lightbox-dialog {
+    transform: translateY(0) scale(1);
+  }
+
+  .cert-lightbox-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-elevated);
+    border: 1px solid var(--border);
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+
+  .cert-lightbox-close:hover {
+    background: var(--ink);
+    color: var(--bg);
+    border-color: var(--ink);
+  }
+
+  .cert-lightbox-close svg {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    fill: none;
+    stroke-width: 1.75;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .cert-lightbox-content {
+    overflow: auto;
+    max-height: calc(90vh - 72px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 32px 24px;
+  }
+
+  .cert-lightbox-content img {
+    display: block;
+    max-width: 100%;
+    max-height: calc(90vh - 120px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+
+  .cert-lightbox-content .journal-cert-mock {
+    max-width: 360px;
+    padding: 40px 28px;
+  }
+
+  .cert-lightbox-content .journal-cert-mock-logo { font-size: 12px; }
+  .cert-lightbox-content .journal-cert-mock-title { font-size: 18px; }
+  .cert-lightbox-content .journal-cert-mock-name { font-size: 11px; }
+  .cert-lightbox-content .journal-cert-mock-date { font-size: 10px; }
+  .cert-lightbox-content .journal-cert-mock-seal { width: 36px; height: 36px; font-size: 14px; }
+
+  .cert-lightbox-caption {
+    padding: 16px 32px 24px;
+    font-family: var(--serif);
+    font-size: clamp(16px, 2.5vw, 20px);
+    font-weight: 300;
+    font-style: italic;
+    text-align: center;
+    color: var(--ink);
+    border-top: 1px solid var(--border);
+  }
+
+  body.cert-lightbox-open { overflow: hidden; }
+
+  @media (hover: none) {
+    .journal-cert-view-btn {
+      opacity: 1;
+      visibility: visible;
+      background: rgba(30, 31, 35, 0.35);
+    }
+  }
+
+  .journal-cert-mock {
+    width: 100%;
+    max-width: 180px;
+    padding: 20px 14px;
+    text-align: center;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(30, 31, 35, 0.08);
+  }
+
+  .journal-cert-mock-logo {
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .journal-cert-mock-title {
+    font-family: var(--serif);
+    font-size: 11px;
+    font-style: italic;
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .journal-cert-mock-name {
+    font-size: 8px;
+    opacity: 0.75;
+    margin-bottom: 4px;
+  }
+
+  .journal-cert-mock-date {
+    font-size: 7px;
+    opacity: 0.6;
+  }
+
+  .journal-cert-mock-seal {
+    width: 24px;
+    height: 24px;
+    margin: 10px auto 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+  }
+
+  .journal-cert-mock--canva {
+    background: linear-gradient(145deg, #7d2ae8 0%, #00c4cc 100%);
+    border-color: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
+  }
+
+  .journal-cert-mock--canva .journal-cert-mock-logo { color: rgba(255, 255, 255, 0.9); }
+  .journal-cert-mock--canva .journal-cert-mock-seal {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+  }
+
+  .journal-cert-mock--casual {
+    background: #fffaf5;
+    border-color: rgba(184, 144, 71, 0.35);
+    color: var(--color-dark);
+  }
+
+  [data-theme="dark"] .journal-cert-mock--casual {
+    background: #2a2b30;
+    color: var(--color-cream);
+  }
+
+  .journal-cert-mock--casual .journal-cert-mock-logo { color: var(--gold); }
+  .journal-cert-mock--casual .journal-cert-mock-seal {
+    background: rgba(184, 144, 71, 0.15);
+    color: var(--gold);
+  }
+
+  .journal-cert-mock--other {
+    background: var(--bg-elevated);
+    color: var(--ink);
+  }
+
+  .journal-cert-mock--other .journal-cert-mock-logo { color: var(--ink-muted); }
+  .journal-cert-mock--other .journal-cert-mock-seal {
+    background: rgba(30, 31, 35, 0.08);
+    color: var(--ink);
+  }
+
+  [data-theme="gold"] .journal-cert-mock--other .journal-cert-mock-seal {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+  }
+
+  .journal-cert-body { min-width: 0; }
+
+  .section-heading {
+    font-family: var(--sans);
+    font-size: 11px; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--ink); margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border);
+  }
+
+  .journal-intro {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 2.28;
+    margin-bottom: 56px;
+    max-width: 560px;
+  }
+
+  .journal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--border);
+  }
+
+  .journal-entry {
+    padding: 40px 0;
+    border-bottom: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+
+  .journal-entry:hover { background: var(--bg-elevated); padding-left: 16px; padding-right: 16px; margin-left: -16px; margin-right: -16px; }
+
+  .journal-date {
+    display: block;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 12px;
+  }
+
+  .journal-title {
+    font-family: var(--serif);
+    font-size: clamp(20px, 3vw, 26px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--ink);
+    line-height: 1.35;
+    margin-bottom: 16px;
+  }
+
+  .journal-excerpt {
+    font-size: 14px;
+    color: var(--ink-muted);
+    line-height: 2.28;
+  }
+
+  .journal-tag {
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .site-footer { background: var(--bg); transition: background 0.35s ease; }
+  .site-footer-content {
+    padding: 20px clamp(24px, 5%, 80px);
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    transition: background 0.35s ease, color 0.35s ease;
+  }
+  [data-theme="cream"] .site-footer-content { background: #000000; color: #ffffff; }
+  [data-theme="gold"] .site-footer-content { background: #ffffff; color: var(--color-dark); }
+  [data-theme="dark"] .site-footer-content { background: var(--color-gold); color: #ffffff; }
+
+  .site-footer-wordmark {
+    display: block; font-family: 'Bastliga One', cursive;
+    font-size: clamp(3.5rem, 14vw, 6rem); color: inherit; text-decoration: none; line-height: 0.95;
+  }
+  .site-footer-wordmark:hover { opacity: 0.82; }
+  .site-footer-name {
+    font-size: 16px; font-weight: 700; letter-spacing: 0.5em; margin-top: 20px; color: inherit;
+  }
+  [data-theme="cream"] .site-footer-wordmark,
+  [data-theme="cream"] .site-footer-name,
+  [data-theme="dark"] .site-footer-wordmark,
+  [data-theme="dark"] .site-footer-name { color: #ffffff; }
+  .site-footer-copy { font-size: 13px; margin-top: 20px; }
+  [data-theme="cream"] .site-footer-copy { color: rgba(255, 255, 255, 0.88); }
+  [data-theme="gold"] .site-footer-copy { color: rgba(30, 31, 35, 0.72); }
+  [data-theme="dark"] .site-footer-copy { color: rgba(255, 255, 255, 0.88); }
+
+  .scroll-top {
+    position: fixed; bottom: 28px; right: 28px; z-index: 90;
+    width: 44px; height: 44px; display: flex; align-items: center; justify-content: center;
+    background: var(--bg); border: 1px solid var(--border); color: var(--ink); cursor: pointer;
+    opacity: 0; visibility: hidden; transform: translateY(12px);
+    transition: opacity 0.3s, visibility 0.3s, transform 0.3s, background 0.2s;
+  }
+  .scroll-top.visible { opacity: 1; visibility: visible; transform: translateY(0); }
+  .scroll-top:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .scroll-top svg {
+    width: 18px; height: 18px; stroke: currentColor; fill: none;
+    stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round;
+  }
+
+  @media (max-width: 768px) {
+    .header-actions { gap: 12px; }
+
+    .theme-toggle {
+      gap: 4px;
+      padding: 2px 4px;
+    }
+
+    .theme-btn {
+      width: 12px;
+      height: 12px;
+      border-width: 1.5px;
+    }
+
+    .nav-socials, .header-subscribe { display: none; }
+    .nav-toggle { display: flex; }
+    .header-inner { max-width: none; }
+    .nav-bar {
+      position: relative;
+      flex-wrap: wrap;
+      width: 100vw;
+      margin-left: calc(50% - 50vw);
+      padding-left: clamp(24px, 5%, 56px);
+      padding-right: clamp(24px, 5%, 56px);
+      box-sizing: border-box;
+    }
+    .nav-menu {
+      display: flex; flex-direction: column; position: absolute;
+      top: 100%; left: 0; right: 0; width: 100%; background: var(--bg);
+      padding: 0 clamp(24px, 5%, 56px); gap: 0; align-items: stretch;
+      overflow: hidden; height: 0; opacity: 0; visibility: hidden; pointer-events: none;
+      box-sizing: border-box;
+    }
+    .nav-menu.is-open, .nav-menu.open { visibility: visible; pointer-events: auto;
+      padding-top: 8px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
+      height: auto; opacity: 1;
+    }
+    .nav-menu li { width: 100%; }
+    .nav-menu > li > a { display: block; width: 100%; padding: 14px 0; }
+    .nav-menu-socials .nav-mobile-social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+    }
+    .nav-menu-mobile { display: list-item; }
+    .nav-menu-socials {
+      display: flex; align-items: center; justify-content: center; gap: 20px;
+      width: 100%; margin-top: 8px; padding-top: 20px; border-top: 1px solid var(--border);
+    }
+    .nav-mobile-social-link {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 42px; height: 42px; border: 1px solid var(--border); color: var(--ink); text-decoration: none;
+    }
+    .nav-mobile-social-link .icon {
+      width: 18px;
+      height: 18px;
+    }
+    .journal-entry:hover { padding-left: 0; padding-right: 0; margin-left: 0; margin-right: 0; }
+    .journal-entry--cert {
+      grid-template-columns: 1fr;
+    }
+    .journal-entry--cert:hover {
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .journal-cert-photo { max-width: 280px; }
+  }
+
+  @media (min-width: 769px) {
+    .nav-bar {
+      position: static;
+      flex-wrap: nowrap;
+      width: auto;
+      margin-left: 0;
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .nav-menu {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      position: static;
+      height: auto !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      pointer-events: auto;
+      overflow: visible;
+      background: transparent;
+      border-bottom: none;
+      padding: 0;
+      gap: clamp(16px, 2.5vw, 36px);
+      align-items: center;
+    }
+
+    .nav-menu > li { width: auto; }
+
+    .nav-menu > li > a {
+      display: inline;
+      width: auto;
+      padding: 0;
+    }
+
+    .nav-menu-mobile,
+    .nav-menu-socials {
+      display: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header" id="site-header">
+  <div class="header-inner">
+    <div class="header-top">
+      <a href="index.html" class="site-name">Erika</a>
+      <div class="header-actions">
+        <button type="button" class="lang-toggle" id="lang-toggle" aria-label="Switch to Chinese">中文</button>
+        <div class="theme-toggle" role="group" aria-label="Color theme">
+          <button type="button" class="theme-btn" data-theme="dark" aria-label="Dark theme"></button>
+          <button type="button" class="theme-btn active" data-theme="cream" aria-label="Cream theme"></button>
+          <button type="button" class="theme-btn" data-theme="gold" aria-label="Gold theme"></button>
+        </div>
+        <a href="index.html#contact" class="header-subscribe" data-i18n="nav.contact">Contact</a>
+        <button class="nav-toggle" id="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+          <span class="nav-toggle-icon" aria-hidden="true">
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+            <span class="nav-toggle-line"></span>
+          </span>
+        </button>
+      </div>
+    </div>
+    <nav class="nav-bar">
+      <ul class="nav-menu" id="nav-menu">
+        <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+        <li><a href="biography.html" data-i18n="nav.biography">Biography</a></li>
+        <li><a href="portfolio.html" data-i18n="nav.portfolio">Portfolio</a></li>
+        <li><a href="journal.html" class="active" data-i18n="nav.journal">Journal</a></li>
+        <li><a href="certificates.html" data-i18n="nav.certificates">Certificates</a></li>
+        <li class="nav-menu-mobile"><a href="index.html#contact" data-i18n="nav.contact">Contact</a></li>
+        <li class="nav-menu-socials">
+          <a href="https://linkedin.com/in/erikabonje" class="nav-mobile-social-link" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg class="icon" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><path d="M2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          </a>
+          <a href="mailto:erika.bonje@email.com" class="nav-mobile-social-link" aria-label="Email">
+            <svg class="icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+          </a>
+        </li>
+      </ul>
+      <div class="nav-socials">
+        <a href="https://linkedin.com/in/erikabonje" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="mailto:erika.bonje@email.com">Email</a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<main class="journal-page" id="journal">
+  <div class="section-inner">
+    <h1 class="section-heading" data-i18n="section.journal">Journal</h1>
+    <p class="journal-intro" data-i18n="journal.intro">Notes on remote work, learning, and certificates earned along the way — from professional credentials to Canva workshops and everything in between.</p>
+
+    <p class="journal-subheading" data-i18n="journal.certHeading">Certificates</p>
+
+    <div class="journal-cert-grid">
+
+      <article class="journal-entry journal-entry--cert">
+        <div class="journal-cert-photo">
+          <!-- Replace with your photo: assets/certificates/canva.jpg (or .png / .webp) -->
+          <img class="journal-cert-img" src="assets/certificates/canva.jpg" alt="Canva Design Certificate" loading="lazy" width="440" height="330">
+          <div class="journal-cert-fallback">
+            <div class="journal-cert-mock journal-cert-mock--canva">
+              <div class="journal-cert-mock-logo">Canva</div>
+              <div class="journal-cert-mock-title" data-i18n="certJournal.canva.title">Canva Design Essentials</div>
+              <div class="journal-cert-mock-name">Erika Joyce Bonje</div>
+              <div class="journal-cert-mock-date" data-i18n="certJournal.canva.date">Completed · Jan 2024</div>
+              <div class="journal-cert-mock-seal" aria-hidden="true">✓</div>
+            </div>
+          </div>
+        </div>
+        <div class="journal-cert-body">
+          <time class="journal-date" datetime="2024-01-15" data-i18n="certJournal.canva.dateLabel">January 15, 2024</time>
+          <h2 class="journal-title" data-i18n="certJournal.canva.heading">Canva Design Certificate</h2>
+          <p class="journal-excerpt" data-i18n="certJournal.canva.excerpt">Completed Canva's design essentials track — layouts, brand kits, social templates, and presentation decks. Great for quick client visuals without opening heavier design tools.</p>
+          <span class="journal-tag" data-i18n="certJournal.canva.tag">Canva</span>
+        </div>
+      </article>
+
+      <article class="journal-entry journal-entry--cert">
+        <div class="journal-cert-photo">
+          <!-- Replace with your photo: assets/certificates/non-professional.jpg -->
+          <img class="journal-cert-img" src="assets/certificates/non-professional.jpg" alt="Non-Professional Certificate" loading="lazy" width="440" height="330">
+          <div class="journal-cert-fallback">
+            <div class="journal-cert-mock journal-cert-mock--casual">
+              <div class="journal-cert-mock-logo" data-i18n="certJournal.casual.logo">Workshop</div>
+              <div class="journal-cert-mock-title" data-i18n="certJournal.casual.title">Email Management Bootcamp</div>
+              <div class="journal-cert-mock-name">Erika Joyce Bonje</div>
+              <div class="journal-cert-mock-date" data-i18n="certJournal.casual.date">Certificate of Completion · 2023</div>
+              <div class="journal-cert-mock-seal" aria-hidden="true">★</div>
+            </div>
+          </div>
+        </div>
+        <div class="journal-cert-body">
+          <time class="journal-date" datetime="2023-08-20" data-i18n="certJournal.casual.dateLabel">August 20, 2023</time>
+          <h2 class="journal-title" data-i18n="certJournal.casual.heading">Non-Professional Certificates</h2>
+          <p class="journal-excerpt" data-i18n="certJournal.casual.excerpt">Short courses and workshop badges from VA communities and online bootcamps — inbox systems, client communication, and admin workflows. Not accredited, but practical for day-to-day client work.</p>
+          <span class="journal-tag" data-i18n="certJournal.casual.tag">Workshops</span>
+        </div>
+      </article>
+
+      <article class="journal-entry journal-entry--cert">
+        <div class="journal-cert-photo">
+          <!-- Replace with your photo: assets/certificates/others.jpg -->
+          <img class="journal-cert-img" src="assets/certificates/others.jpg" alt="Other Certificates" loading="lazy" width="440" height="330">
+          <div class="journal-cert-fallback">
+            <div class="journal-cert-mock journal-cert-mock--other">
+              <div class="journal-cert-mock-logo" data-i18n="certJournal.other.logo">Skillshare</div>
+              <div class="journal-cert-mock-title" data-i18n="certJournal.other.title">Productivity &amp; Tools</div>
+              <div class="journal-cert-mock-name">Erika Joyce Bonje</div>
+              <div class="journal-cert-mock-date" data-i18n="certJournal.other.date">Multiple courses · 2022–2024</div>
+              <div class="journal-cert-mock-seal" aria-hidden="true">✓</div>
+            </div>
+          </div>
+        </div>
+        <div class="journal-cert-body">
+          <time class="journal-date" datetime="2024-06-01" data-i18n="certJournal.other.dateLabel">June 2024</time>
+          <h2 class="journal-title" data-i18n="certJournal.other.heading">Other Certificates</h2>
+          <p class="journal-excerpt" data-i18n="certJournal.other.excerpt">Miscellaneous completions across Notion, Trello, Google Sheets, and time-management courses — small credentials that add up to a well-rounded VA toolkit.</p>
+          <span class="journal-tag" data-i18n="certJournal.other.tag">Others</span>
+        </div>
+      </article>
+
+    </div>
+
+    <p class="journal-subheading" data-i18n="journal.notesHeading">Notes</p>
+
+    <div class="journal-list">
+
+      <article class="journal-entry">
+        <time class="journal-date" datetime="2025-03-12" data-i18n="journal1.date">March 12, 2025</time>
+        <h2 class="journal-title" data-i18n="journal1.title">Building Systems That Last</h2>
+        <p class="journal-excerpt" data-i18n="journal1.excerpt">Spent the morning reorganizing a client's Google Drive — folders by project, consistent naming, shared access rules. It isn't glamorous work, but when everything has a place, the whole team moves faster. Good systems are quiet; you only notice when they're missing.</p>
+        <span class="journal-tag" data-i18n="journal1.tag">Operations</span>
+      </article>
+
+      <article class="journal-entry">
+        <time class="journal-date" datetime="2025-02-04" data-i18n="journal2.date">February 4, 2025</time>
+        <h2 class="journal-title" data-i18n="journal2.title">The Quiet Power of Consistency</h2>
+        <p class="journal-excerpt" data-i18n="journal2.excerpt">Five years of remote VA work has taught me that reliability beats speed every time. Showing up, following through, sending a clear end-of-day update — these small acts build trust faster than any pitch deck. Clients don't need perfection; they need someone who won't disappear.</p>
+        <span class="journal-tag" data-i18n="journal2.tag">Mindset</span>
+      </article>
+
+      <article class="journal-entry">
+        <time class="journal-date" datetime="2024-11-18" data-i18n="journal3.date">November 18, 2024</time>
+        <h2 class="journal-title" data-i18n="journal3.title">Learning QuickBooks, One Client at a Time</h2>
+        <p class="journal-excerpt" data-i18n="journal3.excerpt">Finished the ProAdvisor certification earlier this year, but the real learning happens in practice — reconciling accounts, categorizing expenses, preparing reports a business owner can actually read. Every client's books tell a story. My job is to make that story clear.</p>
+        <span class="journal-tag" data-i18n="journal3.tag">Bookkeeping</span>
+      </article>
+
+      <article class="journal-entry">
+        <time class="journal-date" datetime="2024-09-02" data-i18n="journal4.date">September 2, 2024</time>
+        <h2 class="journal-title" data-i18n="journal4.title">Why I Keep a Content Calendar</h2>
+        <p class="journal-excerpt" data-i18n="journal4.excerpt">A content calendar isn't just a schedule — it's a promise to your audience. When I build one for a client, I map themes, platforms, and review checkpoints so nothing gets posted in a rush. Planning ahead creates room for creativity instead of panic.</p>
+        <span class="journal-tag" data-i18n="journal4.tag">Content</span>
+      </article>
+
+    </div>
+  </div>
+</main>
+
+<div class="cert-lightbox" id="cert-lightbox" aria-hidden="true" role="dialog" aria-labelledby="cert-lightbox-caption">
+  <div class="cert-lightbox-backdrop" id="cert-lightbox-backdrop"></div>
+  <div class="cert-lightbox-dialog">
+    <button type="button" class="cert-lightbox-close" id="cert-lightbox-close" data-i18n-aria="cert.close" aria-label="Close certificate view">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+    <div class="cert-lightbox-content" id="cert-lightbox-content"></div>
+    <p class="cert-lightbox-caption" id="cert-lightbox-caption"></p>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div class="site-footer-content">
+      <a href="index.html" class="site-footer-wordmark" aria-label="Erika Joyce Bonje">Erika</a>
+      <p class="site-footer-name">Erika Joyce Bonje</p>
+      <p class="site-footer-copy"><small data-i18n="footer.rights">&copy; Erika Joyce Bonje. All rights reserved.</small></p>
+    </div>
+  </div>
+</footer>
+
+<button class="scroll-top" id="scroll-top" type="button" data-i18n-aria="scroll.top" aria-label="Scroll to top">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<script>
+  const langKey = 'portfolio-lang';
+  const langToggle = document.getElementById('lang-toggle');
+  let currentLang = 'en';
+
+  const i18n = {
+    en: {
+      pageTitle: 'Erika Joyce Bonje — Journal',
+      'nav.home': 'Home', 'nav.biography': 'Biography', 'nav.portfolio': 'Portfolio',
+      'nav.journal': 'Journal', 'nav.certificates': 'Certificates', 'nav.contact': 'Contact',
+      'section.journal': 'Journal',
+      'journal.intro': 'Notes on remote work, learning, and certificates earned along the way — from professional credentials to Canva workshops and everything in between.',
+      'journal.certHeading': 'Certificates',
+      'journal.notesHeading': 'Notes',
+      'certJournal.canva.title': 'Canva Design Essentials',
+      'certJournal.canva.date': 'Completed · Jan 2024',
+      'certJournal.canva.dateLabel': 'January 15, 2024',
+      'certJournal.canva.heading': 'Canva Design Certificate',
+      'certJournal.canva.excerpt': "Completed Canva's design essentials track — layouts, brand kits, social templates, and presentation decks. Great for quick client visuals without opening heavier design tools.",
+      'certJournal.canva.tag': 'Canva',
+      'certJournal.casual.logo': 'Workshop',
+      'certJournal.casual.title': 'Email Management Bootcamp',
+      'certJournal.casual.date': 'Certificate of Completion · 2023',
+      'certJournal.casual.dateLabel': 'August 20, 2023',
+      'certJournal.casual.heading': 'Non-Professional Certificates',
+      'certJournal.casual.excerpt': 'Short courses and workshop badges from VA communities and online bootcamps — inbox systems, client communication, and admin workflows. Not accredited, but practical for day-to-day client work.',
+      'certJournal.casual.tag': 'Workshops',
+      'certJournal.other.logo': 'Skillshare',
+      'certJournal.other.title': 'Productivity & Tools',
+      'certJournal.other.date': 'Multiple courses · 2022–2024',
+      'certJournal.other.dateLabel': 'June 2024',
+      'certJournal.other.heading': 'Other Certificates',
+      'certJournal.other.excerpt': 'Miscellaneous completions across Notion, Trello, Google Sheets, and time-management courses — small credentials that add up to a well-rounded VA toolkit.',
+      'certJournal.other.tag': 'Others',
+      'journal1.date': 'March 12, 2025',
+      'journal1.title': 'Building Systems That Last',
+      'journal1.excerpt': "Spent the morning reorganizing a client's Google Drive — folders by project, consistent naming, shared access rules. It isn't glamorous work, but when everything has a place, the whole team moves faster. Good systems are quiet; you only notice when they're missing.",
+      'journal1.tag': 'Operations',
+      'journal2.date': 'February 4, 2025',
+      'journal2.title': 'The Quiet Power of Consistency',
+      'journal2.excerpt': "Five years of remote VA work has taught me that reliability beats speed every time. Showing up, following through, sending a clear end-of-day update — these small acts build trust faster than any pitch deck. Clients don't need perfection; they need someone who won't disappear.",
+      'journal2.tag': 'Mindset',
+      'journal3.date': 'November 18, 2024',
+      'journal3.title': 'Learning QuickBooks, One Client at a Time',
+      'journal3.excerpt': "Finished the ProAdvisor certification earlier this year, but the real learning happens in practice — reconciling accounts, categorizing expenses, preparing reports a business owner can actually read. Every client's books tell a story. My job is to make that story clear.",
+      'journal3.tag': 'Bookkeeping',
+      'journal4.date': 'September 2, 2024',
+      'journal4.title': 'Why I Keep a Content Calendar',
+      'journal4.excerpt': "A content calendar isn't just a schedule — it's a promise to your audience. When I build one for a client, I map themes, platforms, and review checkpoints so nothing gets posted in a rush. Planning ahead creates room for creativity instead of panic.",
+      'journal4.tag': 'Content',
+      'footer.rights': '© Erika Joyce Bonje. All rights reserved.',
+      'scroll.top': 'Scroll to top',
+      'cert.view': 'View', 'cert.viewAria': 'View certificate',
+      'cert.close': 'Close certificate view',
+      'lang.switchToZh': 'Switch to Chinese', 'lang.switchToEn': 'Switch to English'
+    },
+    zh: {
+      pageTitle: 'Erika Joyce Bonje — 日志',
+      'nav.home': '首页', 'nav.biography': '个人简介', 'nav.portfolio': '作品集',
+      'nav.journal': '日志', 'nav.certificates': '证书培训', 'nav.contact': '联系',
+      'section.journal': '日志',
+      'journal.intro': '关于远程工作、持续学习，以及沿途获得的证书——从专业认证到 Canva 工作坊，不一而足。',
+      'journal.certHeading': '证书',
+      'journal.notesHeading': '笔记',
+      'certJournal.canva.title': 'Canva 设计基础',
+      'certJournal.canva.date': '2024年1月完成',
+      'certJournal.canva.dateLabel': '2024年1月15日',
+      'certJournal.canva.heading': 'Canva 设计证书',
+      'certJournal.canva.excerpt': '完成 Canva 设计基础课程——版面、品牌套件、社交模板与演示文稿。无需打开更复杂的设计工具，也能快速完成客户视觉需求。',
+      'certJournal.canva.tag': 'Canva',
+      'certJournal.casual.logo': '工作坊',
+      'certJournal.casual.title': '邮件管理训练营',
+      'certJournal.casual.date': '结业证书 · 2023',
+      'certJournal.casual.dateLabel': '2023年8月20日',
+      'certJournal.casual.heading': '非专业证书',
+      'certJournal.casual.excerpt': '来自虚拟助理社群与在线训练营的短期课程和工作坊徽章——收件箱系统、客户沟通与行政流程。虽非官方认证，但对日常客户工作非常实用。',
+      'certJournal.casual.tag': '工作坊',
+      'certJournal.other.logo': 'Skillshare',
+      'certJournal.other.title': '生产力与工具',
+      'certJournal.other.date': '多门课程 · 2022–2024',
+      'certJournal.other.dateLabel': '2024年6月',
+      'certJournal.other.heading': '其他证书',
+      'certJournal.other.excerpt': 'Notion、Trello、Google 表格及时间管理等课程的杂项结业证明——这些小证书汇聚成全面的虚拟助理工具箱。',
+      'certJournal.other.tag': '其他',
+      'journal1.date': '2025年3月12日',
+      'journal1.title': '建立持久的系统',
+      'journal1.excerpt': '上午花时间整理了客户的 Google Drive——按项目分文件夹、统一命名、设置共享权限。这工作并不光鲜，但当一切各就其位，整个团队都会更高效。好的系统很安静；只有缺失时才会被注意到。',
+      'journal1.tag': '运营',
+      'journal2.date': '2025年2月4日',
+      'journal2.title': '坚持的力量',
+      'journal2.excerpt': '五年远程虚拟助理经验告诉我，可靠永远比速度更重要。准时出现、说到做到、发送清晰的每日总结——这些小事比任何推介材料都能更快建立信任。客户不需要完美，他们需要一个不会消失的人。',
+      'journal2.tag': '心态',
+      'journal3.date': '2024年11月18日',
+      'journal3.title': '在实践中学习 QuickBooks',
+      'journal3.excerpt': '今年初完成了 ProAdvisor 认证，但真正的学习发生在实践中——对账、分类支出、准备企业主能看懂的报告。每位客户的账目都在讲述一个故事，我的工作是让这个故事清晰明了。',
+      'journal3.tag': '簿记',
+      'journal4.date': '2024年9月2日',
+      'journal4.title': '为什么我要用内容日历',
+      'journal4.excerpt': '内容日历不只是日程表——它是对受众的承诺。为客户搭建日历时，我会规划主题、平台和审核节点，避免仓促发布。提前规划为创意留出空间，而不是制造恐慌。',
+      'journal4.tag': '内容',
+      'footer.rights': '© Erika Joyce Bonje 版权所有。',
+      'scroll.top': '回到顶部',
+      'cert.view': '查看', 'cert.viewAria': '查看证书',
+      'cert.close': '关闭证书视图',
+      'lang.switchToZh': '切换到中文', 'lang.switchToEn': '切换到英文'
+    }
+  };
+
+  function updateCertViewButtons() {
+    const t = i18n[currentLang];
+    document.querySelectorAll('.journal-cert-view-btn').forEach(btn => {
+      const span = btn.querySelector('span');
+      if (span) span.textContent = t['cert.view'];
+      btn.setAttribute('aria-label', t['cert.viewAria']);
+    });
+  }
+
+  function setLang(lang) {
+    currentLang = lang;
+    const t = i18n[lang];
+    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    document.title = t.pageTitle;
+    localStorage.setItem(langKey, lang);
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      if (t[el.dataset.i18n] !== undefined) el.textContent = t[el.dataset.i18n];
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(el => {
+      if (t[el.dataset.i18nAria] !== undefined) el.setAttribute('aria-label', t[el.dataset.i18nAria]);
+    });
+    langToggle.textContent = lang === 'en' ? '中文' : 'EN';
+    langToggle.setAttribute('aria-label', lang === 'en' ? t['lang.switchToZh'] : t['lang.switchToEn']);
+    updateCertViewButtons();
+  }
+
+  langToggle.addEventListener('click', () => setLang(currentLang === 'en' ? 'zh' : 'en'));
+  if (localStorage.getItem(langKey) === 'zh') setLang('zh');
+
+  const navToggle = document.getElementById('nav-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  const siteHeader = document.getElementById('site-header');
+  navToggle.addEventListener('click', () => {
+    const open = navMenu.classList.toggle('open');
+    navMenu.classList.toggle('is-open', open);
+    navToggle.classList.toggle('open', open);
+    navToggle.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('nav-open', open);
+  });
+  navMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('open', 'is-open');
+      navToggle.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('nav-open');
+    });
+  });
+  window.addEventListener('scroll', () => siteHeader.classList.toggle('scrolled', window.scrollY > 20), { passive: true });
+
+  const themeKey = 'portfolio-theme';
+  const themeBtns = document.querySelectorAll('.theme-btn');
+  function setTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    themeBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.theme === theme));
+    localStorage.setItem(themeKey, theme);
+  }
+  const savedTheme = localStorage.getItem(themeKey);
+  if (savedTheme && ['dark', 'cream', 'gold'].includes(savedTheme)) setTheme(savedTheme);
+  themeBtns.forEach(btn => btn.addEventListener('click', () => setTheme(btn.dataset.theme)));
+
+  const scrollTopBtn = document.getElementById('scroll-top');
+  window.addEventListener('scroll', () => scrollTopBtn.classList.toggle('visible', window.scrollY > 400), { passive: true });
+  scrollTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  /* Show certificate photo when file exists, otherwise keep mock fallback */
+  (function initCertPhotos() {
+    const exts = ['jpg', 'jpeg', 'png', 'webp'];
+
+    document.querySelectorAll('.journal-cert-photo').forEach(wrap => {
+      const img = wrap.querySelector('.journal-cert-img');
+      if (!img) return;
+
+      const baseSrc = img.getAttribute('src').replace(/\.(jpe?g|png|webp)$/i, '');
+      let extIndex = 0;
+
+      function usePhoto() {
+        wrap.classList.add('has-photo');
+      }
+
+      function tryNextExt() {
+        extIndex += 1;
+        if (extIndex >= exts.length) return;
+        img.src = baseSrc + '.' + exts[extIndex];
+      }
+
+      img.addEventListener('load', () => {
+        if (img.naturalWidth > 0) usePhoto();
+      });
+
+      img.addEventListener('error', tryNextExt);
+
+      if (img.complete && img.naturalWidth > 0) {
+        usePhoto();
+      } else if (img.complete && img.naturalWidth === 0) {
+        tryNextExt();
+      }
+    });
+  })();
+
+  (function initCertLightbox() {
+    const lightbox = document.getElementById('cert-lightbox');
+    const backdrop = document.getElementById('cert-lightbox-backdrop');
+    const closeBtn = document.getElementById('cert-lightbox-close');
+    const content = document.getElementById('cert-lightbox-content');
+    const caption = document.getElementById('cert-lightbox-caption');
+    const viewIcon = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+    function openLightbox(wrap) {
+      const img = wrap.querySelector('.journal-cert-img');
+      const entry = wrap.closest('.journal-entry--cert');
+      const titleEl = entry && entry.querySelector('.journal-title');
+      content.innerHTML = '';
+
+      if (wrap.classList.contains('has-photo') && img && img.src) {
+        const fullImg = document.createElement('img');
+        fullImg.src = img.src;
+        fullImg.alt = img.alt || '';
+        content.appendChild(fullImg);
+      } else {
+        const fallback = wrap.querySelector('.journal-cert-fallback');
+        if (fallback) content.appendChild(fallback.cloneNode(true));
+      }
+
+      caption.textContent = titleEl ? titleEl.textContent : '';
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('cert-lightbox-open');
+      closeBtn.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('cert-lightbox-open');
+      content.innerHTML = '';
+      caption.textContent = '';
+    }
+
+    document.querySelectorAll('.journal-cert-photo').forEach(wrap => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'journal-cert-view-btn';
+      btn.setAttribute('aria-label', i18n[currentLang]['cert.viewAria']);
+      btn.innerHTML = '<span>' + i18n[currentLang]['cert.view'] + '</span>' + viewIcon;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openLightbox(wrap);
+      });
+      wrap.appendChild(btn);
+    });
+
+    closeBtn.addEventListener('click', closeLightbox);
+    backdrop.addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+    });
+  })();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+  if (typeof gsap !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.from('.section-heading, .journal-intro', { y: 32, opacity: 0, duration: 0.85, stagger: 0.1, ease: 'power3.out' });
+    gsap.from('.journal-subheading, .journal-entry--cert', {
+      y: 36, opacity: 0, duration: 0.8, stagger: 0.12, ease: 'power3.out',
+      scrollTrigger: { trigger: '.journal-cert-grid', start: 'top 85%' }
+    });
+    gsap.from('.journal-entry:not(.journal-entry--cert)', {
+      y: 36, opacity: 0, duration: 0.8, stagger: 0.12, ease: 'power3.out',
+      scrollTrigger: { trigger: '.journal-list', start: 'top 85%' }
+    });
+  }
+</script>
+
+</body>
+</html>
